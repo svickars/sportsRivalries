@@ -1,0 +1,25 @@
+{
+    "positions": [{
+        "id": "alpha",
+        "x": 10,
+        "y": 4
+    }, {
+        "id": "beta",
+        "x": 0,
+        "y": 40
+    }, {
+        "id": "gamma",
+        "x": 35,
+        "y": 40
+    }],
+    "connections": [{
+        "source": "alpha",
+        "target": "beta"
+    }, {
+        "source": "alpha",
+        "target": "gamma"
+    }, {
+        "source": "gamma",
+        "target": "beta"
+    }]
+}
