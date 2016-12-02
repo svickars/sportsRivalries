@@ -3,76 +3,46 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>The Biggest Rivalries in Sports</title>
+
+    <!--Stylesheets-->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <!--D3 and Fontawesome-->
+    <script src="https://use.typekit.net/hvx7quu.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <script src="https://use.fontawesome.com/132433ada8.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
 
 <body>
-    <svg width="960" height="500"></svg>
-    <script src="//d3js.org/d3.v4.min.js"></script>
-    <script>
-        var svg = d3.select("svg"),
-            width = +svg.attr("width"),
-            height = +svg.attr("height");
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="headly">
+                    <span id="title"><h1>The Biggest Rivalries in Sports</h1></span>
+                    <div class="filters">
+                        <span class="meghan" id="cflButton">CFL</span><span class="meghan" id="cflButton2">CFL</span><span class="meghan" id="mlbButton">MLB</span><span class="meghan" id="mlbButton2">MLB</span><span class="meghan" id="mlsButton">MLS</span><span class="meghan" id="mlsButton2">MLS</span><span class="meghan" id="nbaButton">NBA</span><span class="meghan" id="nbaButton2">NBA</span><span class="meghan" id="nflButton">NFL</span><span class="meghan" id="nflButton2">NFL</span><span class="meghan" id="nhlButton">NHL</span><span class="meghan" id="nhlButton2">NHL</span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row jayZ">
+            <div class="col-xs-12 visualization" id="visualization">
+                
+            </div>
+        </div>
+    </div>
 
-        var simulation = d3.forceSimulation()
-            .force("charge", d3.forceManyBody().strength(-200))
-            .force("link", d3.forceLink().id(function(d) {
-                return d.id;
-            }).distance(40))
-            .force("x", d3.forceX(width / 2))
-            .force("y", d3.forceY(height / 2))
-            .on("tick", ticked);
-
-        var link = svg.selectAll(".link"),
-            node = svg.selectAll(".node");
-
-        d3.json("data.json", function(error, graph) {
-            if (error) throw error;
-
-            var rScale = d3.scaleLinear()
-                .domain([0, 1237])
-                .range([6, 40])
-            
-            simulation.nodes(graph.nodes);
-            simulation.force("link").links(graph.links);
-
-            link = link
-                .data(graph.links)
-                .enter().append("line")
-                .attr("class", function(d) { return d.class; });
-
-            node = node
-                .data(graph.nodes)
-                .enter().append("circle")
-                .attr("class", function(d) { return d.class; })
-                .attr("id", function(d) {
-                    return d.team;
-                })
-                .attr('r', function(d) { return rScale(d.wins); });
-        });
-
-        function ticked() {
-            link.attr("x1", function(d) {
-                    return d.source.x;
-                })
-                .attr("y1", function(d) {
-                    return d.source.y;
-                })
-                .attr("x2", function(d) {
-                    return d.target.x;
-                })
-                .attr("y2", function(d) {
-                    return d.target.y;
-                });
-
-            node.attr("cx", function(d) {
-                    return d.x;
-                })
-                .attr("cy", function(d) {
-                    return d.y;
-                });
-        }
-    </script>
+    <!--LOAD SCRIPTS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/viz.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 
 </html>
