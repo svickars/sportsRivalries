@@ -1,9 +1,89 @@
-var svg = d3.select("#visualization").append("svg").attr("class", "svg");
+// ---------FILTER BUTTONS---------
+// --CFL--
+var cflButton = d3.select("#cflButton");
+var cflButton2 = d3.select("#cflButton2");
+cflButton.on("click", function() {
+    d3.select("#cflButton").style("display", "none");
+    d3.select("#cflButton2").style("display", "inline-block");
+    d3.selectAll(".cfl").style("visibility", "hidden");
+});
+cflButton2.on("click", function() {
+    d3.select("#cflButton2").style("display", "none");
+    d3.select("#cflButton").style("display", "inline-block");
+    d3.selectAll(".cfl").style("visibility", "visible");
+});
+// --MLB--
+var mlbButton = d3.select("#mlbButton");
+var mlbButton2 = d3.select("#mlbButton2");
+mlbButton.on("click", function() {
+    d3.select("#mlbButton").style("display", "none");
+    d3.select("#mlbButton2").style("display", "inline-block");
+    d3.selectAll(".mlb").style("visibility", "hidden");
+});
+mlbButton2.on("click", function() {
+    d3.select("#mlbButton2").style("display", "none");
+    d3.select("#mlbButton").style("display", "inline-block");
+    d3.selectAll(".mlb").style("visibility", "visible");
+});
+// --MLS--
+var mlsButton = d3.select("#mlsButton");
+var mlsButton2 = d3.select("#mlsButton2");
+mlsButton.on("click", function() {
+    d3.select("#mlsButton").style("display", "none");
+    d3.select("#mlsButton2").style("display", "inline-block");
+    d3.selectAll(".mls").style("visibility", "hidden");
+});
+mlsButton2.on("click", function() {
+    d3.select("#mlsButton2").style("display", "none");
+    d3.select("#mlsButton").style("display", "inline-block");
+    d3.selectAll(".mls").style("visibility", "visible");
+});
+// --NBA--
+var nbaButton = d3.select("#nbaButton");
+var nbaButton2 = d3.select("#nbaButton2");
+nbaButton.on("click", function() {
+    d3.select("#nbaButton").style("display", "none");
+    d3.select("#nbaButton2").style("display", "inline-block");
+    d3.selectAll(".nba").style("visibility", "hidden");
+});
+nbaButton2.on("click", function() {
+    d3.select("#nbaButton2").style("display", "none");
+    d3.select("#nbaButton").style("display", "inline-block");
+    d3.selectAll(".nba").style("visibility", "visible");
+});
+// --NFL--
+var nflButton = d3.select("#nflButton");
+var nflButton2 = d3.select("#nflButton2");
+nflButton.on("click", function() {
+    d3.select("#nflButton").style("display", "none");
+    d3.select("#nflButton2").style("display", "inline-block");
+    d3.selectAll(".nfl").style("visibility", "hidden");
+});
+nflButton2.on("click", function() {
+    d3.select("#nflButton2").style("display", "none");
+    d3.select("#nflButton").style("display", "inline-block");
+    d3.selectAll(".nfl").style("visibility", "visible");
+});
+// --NHL--
+var nhlButton = d3.select("#nhlButton");
+var nhlButton2 = d3.select("#nhlButton2");
+nhlButton.on("click", function() {
+    d3.select("#nhlButton").style("display", "none");
+    d3.select("#nhlButton2").style("display", "inline-block");
+    d3.selectAll(".nhl").style("visibility", "hidden");
+});
+nhlButton2.on("click", function() {
+    d3.select("#nhlButton2").style("display", "none");
+    d3.select("#nhlButton").style("display", "inline-block");
+    d3.selectAll(".nhl").style("visibility", "visible");
+});
+
+
+// ----------THE VIZZY----------
+
+var svg = d3.select('#visualization').append("svg").attr("class", "svg");
 var width = document.getElementById("visualization").offsetWidth;
 var height = document.getElementById("visualization").offsetHeight;
-
-console.log(width);
-console.log(height);
 
 var simulation = d3.forceSimulation()
     .force("charge", d3.forceManyBody().strength(-200))
@@ -16,91 +96,6 @@ var simulation = d3.forceSimulation()
 
 var link = svg.selectAll(".link"),
     node = svg.selectAll(".node");
-
-
-
-
-
-// ---------FILTER BUTTONS---------
-// --CFL--
-var cflButton = d3.select("#cflButton");
-var cflButton2 = d3.select("#cflButton2");
-cflButton.on("click", function() {
-        d3.select("#cflButton").style("display", "none");
-        d3.select("#cflButton2").style("display", "inline-block");
-        d3.selectAll(".cfl").style("visibility", "hidden");
-});
-cflButton2.on("click", function() {
-        d3.select("#cflButton2").style("display", "none");
-        d3.select("#cflButton").style("display", "inline-block");
-        d3.selectAll(".cfl").style("visibility", "visible");
-});
-// --MLB--
-var mlbButton = d3.select("#mlbButton");
-var mlbButton2 = d3.select("#mlbButton2");
-mlbButton.on("click", function() {
-        d3.select("#mlbButton").style("display", "none");
-        d3.select("#mlbButton2").style("display", "inline-block");
-        d3.selectAll(".mlb").style("visibility", "hidden");
-});
-mlbButton2.on("click", function() {
-        d3.select("#mlbButton2").style("display", "none");
-        d3.select("#mlbButton").style("display", "inline-block");
-        d3.selectAll(".mlb").style("visibility", "visible");
-});
-// --MLS--
-var mlsButton = d3.select("#mlsButton");
-var mlsButton2 = d3.select("#mlsButton2");
-mlsButton.on("click", function() {
-        d3.select("#mlsButton").style("display", "none");
-        d3.select("#mlsButton2").style("display", "inline-block");
-        d3.selectAll(".mls").style("visibility", "hidden");
-});
-mlsButton2.on("click", function() {
-        d3.select("#mlsButton2").style("display", "none");
-        d3.select("#mlsButton").style("display", "inline-block");
-        d3.selectAll(".mls").style("visibility", "visible");
-});
-// --NBA--
-var nbaButton = d3.select("#nbaButton");
-var nbaButton2 = d3.select("#nbaButton2");
-nbaButton.on("click", function() {
-        d3.select("#nbaButton").style("display", "none");
-        d3.select("#nbaButton2").style("display", "inline-block");
-        d3.selectAll(".nba").style("visibility", "hidden");
-});
-nbaButton2.on("click", function() {
-        d3.select("#nbaButton2").style("display", "none");
-        d3.select("#nbaButton").style("display", "inline-block");
-        d3.selectAll(".nba").style("visibility", "visible");
-});
-// --NFL--
-var nflButton = d3.select("#nflButton");
-var nflButton2 = d3.select("#nflButton2");
-nflButton.on("click", function() {
-        d3.select("#nflButton").style("display", "none");
-        d3.select("#nflButton2").style("display", "inline-block");
-        d3.selectAll(".nfl").style("visibility", "hidden");
-});
-nflButton2.on("click", function() {
-        d3.select("#nflButton2").style("display", "none");
-        d3.select("#nflButton").style("display", "inline-block");
-        d3.selectAll(".nfl").style("visibility", "visible");
-});
-// --NHL--
-var nhlButton = d3.select("#nhlButton");
-var nhlButton2 = d3.select("#nhlButton2");
-nhlButton.on("click", function() {
-        d3.select("#nhlButton").style("display", "none");
-        d3.select("#nhlButton2").style("display", "inline-block");
-        d3.selectAll(".nhl").style("visibility", "hidden");
-});
-nhlButton2.on("click", function() {
-        d3.select("#nhlButton2").style("display", "none");
-        d3.select("#nhlButton").style("display", "inline-block");
-        d3.selectAll(".nhl").style("visibility", "visible");
-});
-
 
 d3.json("js/data.json", function(error, graph) {
     if (error) throw error;
@@ -152,5 +147,47 @@ function ticked() {
         })
         .attr("cy", function(d) {
             return d.y;
-        });
+        })
+}
+
+var points = d3.range(2000).map(phyllotaxis(10));
+
+var circle = svg.selectAll("circle")
+    .data(points)
+  .enter().append("circle")
+    .attr("transform", function(d) { return "translate(" + d[0] + "," + d[1] + ")"; })
+    .attr("r", 2.5);
+
+// var circle = svg.selectAll("circle")
+//     .data(points)
+//   .enter().append("circle")
+//     .attr("transform", function(d) { return "translate(" + d[0] + "," + d[1] + ")"; })
+//     .attr("r", 2.5);
+
+svg.append("rect")
+    .attr("width", width)
+    .attr("height", height)
+    .style("fill", "none")
+    .style("pointer-events", "all")
+    .call(d3.zoom()
+        .scaleExtent([1 / 2, 4])
+        .on("zoom", zoomed));
+
+
+function zoomed() {
+  var transform = d3.event.transform;
+  circle.attr("transform", function(d) {
+    return "translate(" + transform.applyX(d[0]) + "," + transform.applyY(d[1]) + ")";
+  });
+}
+
+function phyllotaxis(radius) {
+  var theta = Math.PI * (3 - Math.sqrt(5));
+  return function(i) {
+    var r = radius * Math.sqrt(i), a = theta * i;
+    return [
+      width / 2 + r * Math.cos(a),
+      height / 2 + r * Math.sin(a)
+    ];
+  };
 }

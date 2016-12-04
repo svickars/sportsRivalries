@@ -1,8 +1,9 @@
-html, body {
-    width:100%;
-    height:100%;
-    margin:0 !important;
+/*--------------------*/
+/*-----THE BASICS-----*/
+
+body {
     overflow: hidden;
+    margin: 0;
 }
 
 h1 {
@@ -13,9 +14,15 @@ h1 {
     color: black;
 }
 
+text {
+    font-family: "skolar-sans-latin",sans-serif !important;
+    pointer-events: none;
+}
 
 
-/*----LAYOUT----*/
+
+/*--------------------*/
+/*-----THE LAYOUT-----*/
 
 .container-fluid {
     padding: 0;
@@ -44,8 +51,7 @@ h1 {
 }
 
 
-
-/*----HEADER----*/
+/*--HEADER--*/
 
 .title {
     position: absolute;
@@ -108,7 +114,7 @@ h1 {
     margin-top: 10px;
 }
 
-/*Buttons*/
+/*buttons*/
 .meghan {
     padding: 0px 10px 2px 10px;
     margin: 0 5px;
@@ -190,50 +196,64 @@ h1 {
 }
 
 
+/*-------------------*/
+/*-----THE VIZZY-----*/
 
-/*----GRAPHY McGRAPHERSON----*/
-
+/*nodes and links*/
 .link {
-    /*stroke: #000;*/
-    stroke-width: 1.5px;
 }
 
 .node {
-    fill: white;
+    fill: rgba(255,255,255,.5);
+    stroke-width: 1.5px;
 }
 
 .nhl {
     stroke-width: 1.5px;
-    fill: white;
-    stroke: #f0cb69;
+    /*stroke: #f0cb69;*/
 }
 
 .nfl {
     stroke-width: 1.5px;
-    fill: white;
-    stroke: #275174;
+    /*stroke: #275174;*/
 }
 
 .cfl {
     stroke-width: 1.5px;
-    fill: white;
-    stroke: #3dbff2;
+    /*stroke: #3dbff2;*/
 }
 
 .nba {
     stroke-width: 1.5px;
-    fill: white;
-    stroke: #60742f;
+    /*stroke: #60742f;*/
 }
 
 .mlb {
     stroke-width: 1.5px;
-    fill: white;
-    stroke: #f2671f;
+    /*stroke: #f2671f;*/
 }
 
 .mls {
     stroke-width: 1.5px;
-    fill: white;
-    stroke: #c2495d;
+    /*stroke: #c2495d;*/
+}
+
+/*labels*/
+#nLabelC {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    stroke: none;
+    fill: black;
+    text-anchor: middle;
+    -webkit-text-stroke: 1px white;
+}
+#nLabelN {
+    font-size: 10px;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    stroke: none;
+    fill: black;
+    text-anchor: middle;
 }
