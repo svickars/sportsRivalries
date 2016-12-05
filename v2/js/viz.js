@@ -97,25 +97,18 @@ var highlight_color = "black";
 var highlight_trans = 0.1;
 
 // --set up scale by number of wins--
-var size = d3.scale.pow().exponent(1)
-    .domain([1, 100])
-    .range([8, 24]);
+var winScale = d3.scale.linear()
+    .domain([0, 1237])
+    .range([((w)), ((6*w))]);
 
 // --set up force layout--
-
 var force = d3.layout.force()
     .linkDistance(60)
     .charge(-300)
     .size([w, h]);
 
-var default_link_color = "#888";
-var nominal_base_node_size = 8;
-var nominal_text_size = 10;
-var max_text_size = 24;
-var nominal_stroke = 1.5;
-var max_stroke = 4.5;
-var max_base_node_size = 36;
-var min_zoom = 0.1;
+// --global variables--
+var min_zoom = .5;
 var max_zoom = 7;
 var svg = d3.select("#visualization").append("svg");
 var zoom = d3.behavior.zoom().scaleExtent([min_zoom, max_zoom])
@@ -125,7 +118,7 @@ svg.style("cursor", "move");
 
 
 
-
+// ---------THE VIZZY---------
 
 d3.json("js/data.json", function(error, graph) {
 
@@ -146,11 +139,11 @@ d3.json("js/data.json", function(error, graph) {
         return false;
     }
 
-    force
-        .nodes(graph.nodes)
+    force.nodes(graph.nodes)
         .links(graph.links)
         .start();
 
+    // create links
     var link = g.selectAll(".link")
         .data(graph.links)
         .enter().append("line")
@@ -160,13 +153,8 @@ d3.json("js/data.json", function(error, graph) {
         .style("stroke", function(d) {
             return d.colour;
         });
-    // .style("stroke-width", nominal_stroke)
-    // .style("stroke", function(d) {
-    //     if (isNumber(d.score) && d.score >= 0) return color(d.score);
-    //     else return default_link_color;
-    // })
 
-
+    // create nodes
     var node = g.selectAll(".node")
         .data(graph.nodes)
         .enter().append("g")
@@ -181,7 +169,7 @@ d3.json("js/data.json", function(error, graph) {
         })
         .call(force.drag);
 
-
+    // what do to on double click - zoom it!
     node.on("dblclick.zoom", function(d) {
         d3.event.stopPropagation();
         var dcx = (window.innerWidth / 2 - d.x * zoom.scale());
@@ -190,20 +178,17 @@ d3.json("js/data.json", function(error, graph) {
         g.attr("transform", "translate(" + dcx + "," + dcy + ")scale(" + zoom.scale() + ")");
     });
 
-    var winScale = d3.scale.linear()
-        .domain([0, 1237])
-        .range([800, 4000]);
-
+    // size the nodes
     var circle = node.append("path")
         .attr("d", d3.svg.symbol()
-        .size(function(d) {
-            return winScale(d.wins);
-        })
-        .type(function(d) {
-            return d.type;
-        }));
+            .size(function(d) {
+                return winScale(d.wins);
+            })
+            .type(function(d) {
+                return d.type;
+            }));
 
-
+    // label: team city
     var nLabelC = g.selectAll(".text")
         .data(graph.nodes)
         .enter().append("text")
@@ -216,6 +201,7 @@ d3.json("js/data.json", function(error, graph) {
             return d.teamLocation
         })
 
+    // label: team name
     var nLabelN = g.selectAll(".text")
         .data(graph.nodes)
         .enter().append("text")
@@ -228,78 +214,17 @@ d3.json("js/data.json", function(error, graph) {
             return d.teamName
         })
 
-
+    // node interaction
     node.on("mouseover", function(d) {
             set_highlight(d);
-            console.log(d);
         })
-        .on("mousedown", function(d) {
-            d3.event.stopPropagation();
-            focus_node = d;
-            set_focus(d)
-            if (highlight_node === null) set_highlight(d)
-
-        }).on("mouseout", function(d) {
+        .on("mouseout", function(d) {
             exit_highlight();
-
         });
 
-    d3.select(window).on("mouseup",
-        function() {
-            if (focus_node !== null) {
-                focus_node = null;
-                if (highlight_trans < 1) {
-                    circle.style("opacity", 1);
-                    nLabelC.style("opacity", 1);
-                    nLabelN.style("opacity", 1);
-                    link.style("opacity", 1);
-                }
-            }
 
-            if (highlight_node === null) exit_highlight();
-        });
-
-    function exit_highlight() {
-        highlight_node = null;
-        if (focus_node === null) {
-            svg.style("cursor", "move");
-            if (highlight_color != "white") {
-                circle.style("stroke", function(d) {
-                    return d.colour;
-                });
-                nLabelC.style("font-weight", "normal")
-                    .style("opacity", 1.0);
-                nLabelN.style("font-weight", "normal")
-                        .style("opacity", 1.0);
-                link.style("stroke", function(d) {
-                    return d.colour;
-                });
-            }
-
-        }
-    }
-
-    function set_focus(d) {
-        if (highlight_trans < 1) {
-            circle.style("opacity", function(o) {
-                return isConnected(d, o) ? 1 : highlight_trans;
-            });
-
-            nLabelC.style("opacity", function(o) {
-                return isConnected(d, o) ? 1 : highlight_trans;
-            });
-
-            nLabelN.style("opacity", function(o) {
-                return isConnected(d, o) ? 1 : highlight_trans;
-            });
-
-            link.style("opacity", function(o) {
-                return o.source.index == d.index || o.target.index == d.index ? 1 : highlight_trans;
-            });
-        }
-    }
-
-
+    // ----THE MOUSE----
+    // --mouseover--
     function set_highlight(d) {
         svg.style("cursor", "pointer");
         if (focus_node !== null) d = focus_node;
@@ -307,7 +232,7 @@ d3.json("js/data.json", function(error, graph) {
 
         if (highlight_color != "white") {
             circle.style("stroke", function(o) {
-                return isConnected(d, o) ? highlight_color : "rgba(0,0,0,0.05)";
+                return isConnected(d, o) ? d.colour : "rgba(0,0,0,0.05)";
             });
             nLabelC.style("font-weight", function(o) {
                 return isConnected(d, o) ? "600" : "normal";
@@ -322,79 +247,95 @@ d3.json("js/data.json", function(error, graph) {
                 return isConnected(d, o) ? 1 : 0.1;
             })
             link.style("stroke", function(o) {
-                return o.source.index == d.index || o.target.index == d.index ? highlight_color : ((isNumber(o.score) && o.score >= 0) ? highlight_color : "rgba(0,0,0,0.05)");
+                return o.source.index == d.index || o.target.index == d.index ? d.colour : ((isNumber(o.score) && o.score >= 0) ? d.colour : "rgba(0,0,0,0.05)");
 
             });
         }
     }
 
+    // --mouseout--
+    function exit_highlight() {
+        highlight_node = null;
+        if (focus_node === null) {
+            svg.style("cursor", "move");
+            if (highlight_color != "white") {
+                circle.style("stroke", function(d) {
+                    return d.colour;
+                });
+                nLabelC.style("font-weight", "normal")
+                    .style("opacity", 1.0);
+                nLabelN.style("font-weight", "normal")
+                    .style("opacity", 1.0);
+                link.style("stroke", function(d) {
+                    return d.colour;
+                });
+            }
+        }
+    }
 
+    // function set_focus(d) {
+    //     if (highlight_trans < 1) {
+    //         circle.style("opacity", function(o) {
+    //             return isConnected(d, o) ? 1 : highlight_trans;
+    //         });
+
+    //         nLabelC.style("opacity", function(o) {
+    //             return isConnected(d, o) ? 1 : highlight_trans;
+    //         });
+
+    //         nLabelN.style("opacity", function(o) {
+    //             return isConnected(d, o) ? 1 : highlight_trans;
+    //         });
+
+    //         link.style("opacity", function(o) {
+    //             return o.source.index == d.index || o.target.index == d.index ? 1 : highlight_trans;
+    //         });
+    //     }
+    // }
+
+    // --zoomskies--
     zoom.on("zoom", function() {
-
-        var stroke = nominal_stroke;
-        if (nominal_stroke * zoom.scale() > max_stroke) stroke = max_stroke / zoom.scale();
-        link.style("stroke-width", stroke);
-        circle.style("stroke-width", stroke);
-
-        var base_radius = nominal_base_node_size;
-        if (nominal_base_node_size * zoom.scale() > max_base_node_size) base_radius = max_base_node_size / zoom.scale();
-        circle.attr("d", d3.svg.symbol()
-            .size(function(d) {
-                return Math.PI * Math.pow(size(d.size) * base_radius / nominal_base_node_size || base_radius, 2);
-            })
-            .type(function(d) {
-                return d.type;
-            }))
-
-        //circle.attr("r", function(d) { return (size(d.size)*base_radius/nominal_base_node_size||base_radius); })
-        if (!text_center) nLabelC.attr("dx", function(d) {
-            return (size(d.size) * base_radius / nominal_base_node_size || base_radius);
-        });
-
-        var text_size = nominal_text_size;
-        if (nominal_text_size * zoom.scale() > max_text_size) text_size = max_text_size / zoom.scale();
-        nLabelC.style("font-size", text_size + "px");
-        nLabelN.style("font-size", text_size + "px");
-
         g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     });
 
     svg.call(zoom);
 
     resize();
-    //window.focus();
+    
     d3.select(window).on("resize", resize);
 
+
+    //--position nodes---
     force.on("tick", function() {
 
         var yPos = d3.scale.linear()
-            .domain([25, 55])
-            .range([h - 75, 0]);
+            .domain([0, 3400])
+            .range([0, h-75]);
         var xPos = d3.scale.linear()
-            .domain([-128, -66])
+            .domain([0, 3400])
             .range([0, w]);
 
         node.attr("transform", function(d) {
-            return "translate(" + xPos(d.lng) + "," + yPos(d.lat) + ")";
+            return "translate(" + xPos(d.illX) + "," + yPos(d.illY) + ")";
         });
         nLabelC.attr("transform", function(d) {
-            return "translate(" + xPos(d.lng) + "," + yPos(d.lat) + ")";
+            return "translate(" + xPos(d.illX) + "," + yPos(d.illY) + ")";
         });
         nLabelN.attr("transform", function(d) {
-            return "translate(" + xPos(d.lng) + "," + yPos(d.lat) + ")";
+            return "translate(" + xPos(d.illX) + "," + yPos(d.illY) + ")";
         });
 
         link.attr("x1", function(d) {
-                return xPos(d.source.lng);
+                return xPos(d.source.illX);
             })
             .attr("y1", function(d) {
-                return yPos(d.source.lat);
+                return yPos(d.source.illY);
             })
             .attr("x2", function(d) {
-                return xPos(d.target.lng);
+                return xPos(d.target.illX);
             })
             .attr("y2", function(d) {
-                return yPos(d.target.lat);
+                return yPos(d.target.illY);
             });
 
         node.attr("cx", function(d) {
@@ -419,58 +360,8 @@ d3.json("js/data.json", function(error, graph) {
 
 });
 
-function vis_by_type(type) {
-    switch (type) {
-        case "circle":
-            return keyc;
-        case "square":
-            return keys;
-        case "triangle-up":
-            return keyt;
-        case "diamond":
-            return keyr;
-        case "cross":
-            return keyx;
-        case "triangle-down":
-            return keyd;
-        default:
-            return true;
-    }
-}
-
-function vis_by_node_score(score) {
-    if (isNumber(score)) {
-        if (score >= 0.666) return keyh;
-        else if (score >= 0.333) return keym;
-        else if (score >= 0) return keyl;
-    }
-    return true;
-}
-
-function vis_by_link_score(score) {
-    if (isNumber(score)) {
-        if (score >= 0.666) return key3;
-        else if (score >= 0.333) return key2;
-        else if (score >= 0) return key1;
-    }
-    return true;
-}
+// ---------UTILITIES---------
 
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
-
-function hexToRgbA(hex) {
-    var c;
-    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-        c = hex.substring(1).split('');
-        if (c.length == 3) {
-            c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-        }
-        c = '0x' + c.join('');
-        return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',');
-    }
-    throw new Error('Bad Hex');
-}
-
-// console.log(hexToRgbA("#ffffff"))

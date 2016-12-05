@@ -19,7 +19,9 @@ text {
     pointer-events: none;
 }
 
-
+svg {
+    min-width: 1000px;
+}
 
 /*--------------------*/
 /*-----THE LAYOUT-----*/
@@ -205,37 +207,31 @@ text {
 
 .node {
     fill: rgba(255,255,255,.5);
-    stroke-width: 1.5px;
+    stroke-width: 1px;
 }
 
 .nhl {
-    stroke-width: 1.5px;
-    /*stroke: #f0cb69;*/
+    stroke-width: 1px;
 }
 
 .nfl {
-    stroke-width: 1.5px;
-    /*stroke: #275174;*/
+    stroke-width: 1px;
 }
 
 .cfl {
-    stroke-width: 1.5px;
-    /*stroke: #3dbff2;*/
+    stroke-width: 1px;
 }
 
 .nba {
-    stroke-width: 1.5px;
-    /*stroke: #60742f;*/
+    stroke-width: 1px;
 }
 
 .mlb {
-    stroke-width: 1.5px;
-    /*stroke: #f2671f;*/
+    stroke-width: 1px;
 }
 
 .mls {
-    stroke-width: 1.5px;
-    /*stroke: #c2495d;*/
+    stroke-width: 1px;
 }
 
 /*labels*/
