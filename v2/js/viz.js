@@ -223,13 +223,35 @@ d3.json("js/data.json", function(error, graph) {
         .text(function(d) {
             return d.teamLocation
         })
+    var nLabelCF = g.selectAll(".text")
+        .data(graph.nodes)
+        .enter().append("text")
+        .attr("dy", "0em")
+        .attr("id", "nLabelCF")
+        .attr("class", function(d) {
+            return d.classOrig;
+        })
+        .text(function(d) {
+            return d.teamLocation
+        })
 
     // label: team name
     var nLabelN = g.selectAll(".text")
         .data(graph.nodes)
         .enter().append("text")
-        .attr("dy", ".75em")
+        .attr("dy", ".8em")
         .attr("id", "nLabelN")
+        .attr("class", function(d) {
+            return d.classOrig;
+        })
+        .text(function(d) {
+            return d.teamName
+        });
+    var nLabelNF = g.selectAll(".text")
+        .data(graph.nodes)
+        .enter().append("text")
+        .attr("dy", ".8em")
+        .attr("id", "nLabelNF")
         .attr("class", function(d) {
             return d.classOrig;
         })
@@ -397,7 +419,13 @@ d3.json("js/data.json", function(error, graph) {
         nLabelC.attr("transform", function(d) {
             return "translate(" + xPos(d.illX) + "," + yPos(d.illY) + ")";
         });
+        nLabelCF.attr("transform", function(d) {
+            return "translate(" + xPos(d.illX) + "," + yPos(d.illY) + ")";
+        });
         nLabelN.attr("transform", function(d) {
+            return "translate(" + xPos(d.illX) + "," + yPos(d.illY) + ")";
+        });
+        nLabelNF.attr("transform", function(d) {
             return "translate(" + xPos(d.illX) + "," + yPos(d.illY) + ")";
         });
 

@@ -241,12 +241,30 @@ svg {
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    stroke: rgba(255,255,255,0.5);
+    stroke-width: 2px;
+    fill: black;
+    text-anchor: middle;
+}
+#nLabelN {
+    font-size: 10px;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    stroke: rgba(255,255,255,0.5);
+    stroke-width: 2px;
+    fill: black;
+    text-anchor: middle;
+}
+#nLabelCF {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     stroke: none;
     fill: black;
     text-anchor: middle;
-    -webkit-text-stroke: 1px white;
 }
-#nLabelN {
+#nLabelNF {
     font-size: 10px;
     font-style: italic;
     text-transform: uppercase;
