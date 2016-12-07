@@ -84,8 +84,10 @@ nhlButton2.on("click", function() {
 
 // ---------THE SET-UP---------
 // --sizes--
-var w = window.innerWidth;
-var h = window.innerHeight;
+var wW = window.innerWidth;
+var wH = window.innerHeight;
+var w = 2000;
+var h = 1500;
 
 // --set default modes--
 var focus_node = null,
@@ -99,7 +101,15 @@ var highlight_trans = 0.1;
 // --set up scale by number of wins--
 var winScale = d3.scale.linear()
     .domain([0, 1237])
-    .range([((w)), ((6*w))]);
+    .range([1000, 15000]);
+
+// --set up x and y position scales-- 
+var yPos = d3.scale.linear()
+    .domain([0, 1500])
+    .range([0, h-75]);
+var xPos = d3.scale.linear()
+    .domain([0, 1500])
+    .range([0, w]);
 
 // --set up force layout--
 var force = d3.layout.force()
@@ -110,11 +120,19 @@ var force = d3.layout.force()
 // --global variables--
 var min_zoom = .5;
 var max_zoom = 7;
-var svg = d3.select("#visualization").append("svg");
+var svg = d3.select("#visualization").append("svg").attr("class", "svg");
 var zoom = d3.behavior.zoom().scaleExtent([min_zoom, max_zoom])
 var g = svg.append("g");
 svg.style("cursor", "move");
 
+// --set options--
+var clicked = false;
+
+// --create popup divs--
+// var popup = d3.select("svg").append("div").attr("class", "popup");
+// popup.style("top", "100px").style("right", "100px").html("test");
+
+var popup = d3.select("#visualization").append("div").attr("class", "popup");
 
 
 
@@ -147,6 +165,9 @@ d3.json("js/data.json", function(error, graph) {
     var link = g.selectAll(".link")
         .data(graph.links)
         .enter().append("line")
+        .attr("id", function(d) {
+            return d.fullId;
+        })
         .attr("class", function(d) {
             return d.class;
         })
@@ -212,19 +233,79 @@ d3.json("js/data.json", function(error, graph) {
         })
         .text(function(d) {
             return d.teamName
-        })
+        });
+    
+    nLabelC.attr("transform", function(d) {
+            return "translate(" + xPos(d.illX) + "," + yPos(d.illY) + ")";
+        });
+    nLabelN.attr("transform", function(d) {
+        return "translate(" + xPos(d.illX) + "," + yPos(d.illY) + ")";
+    });
 
     // node interaction
     node.on("mouseover", function(d) {
+            if (clicked == false) {
             set_highlight(d);
+            }
+        })
+        .on("click", function(d) {
+            if (clicked == false) {
+                nodePop(d);
+                set_highlight(d);
+            }else{
+                popOut();
+            }
         })
         .on("mouseout", function(d) {
-            exit_highlight();
+            if (clicked == false) {
+                exit_highlight();
+            }
         });
+        
+    link.on("mouseover", function(d) {
+        if (clicked == false){
+            set_highlightLink(d);
+        }
+    })
+    .on("mouseout", function(d) {
+        if (clicked == false){
+            exit_highlight(d);
+        }
+    });
 
+    // ----THE POPUPS----
+    function nodePop(d) {
+        clicked = true;
+        
+        popup.style("display", "block")
+            .html("<div class='pHeader'><div class='pOut'>"+d.team+"</div></div><div class='pInfo'><span class='pHeadline'>League: </span>"+d.league+"<br><span class='pHeadline'>City: </span>"+d.city+"</div>");
+            
+        d3.select(".pHeader").style("background-color", d.cBack);
+        d3.select(".pHeader").style("color", d.cText);
+        d3.select(".pOut").style("border-color", d.cOutline);
+        d3.select(".pInfo").style("border", "3px solid " + d.cBack);
+    }
+    
+    function popOut() {
+        clicked = false;
+        popup.style("display", "none");
+    }
 
     // ----THE MOUSE----
     // --mouseover--
+    function set_highlightLink(d) {
+        svg.style("cursor", "pointer");
+        console.log(d.fullId);
+        d3.selectAll(".node").style("stroke", "rgba(0,0,0,0.05)");
+        d3.selectAll(".link").style("stroke", "rgba(0,0,0,0.05)");
+        d3.select("#" + d.source.id).style("stroke", "black");
+        d3.select("#" + d.target.id).style("stroke", "black");
+        d3.select("#" + d.fullId).style("stroke", "black");
+    }
+    function exit_highlightLink(d) {
+        svg.style("cursor", "move");
+        
+    }
     function set_highlight(d) {
         svg.style("cursor", "pointer");
         if (focus_node !== null) d = focus_node;
@@ -308,13 +389,6 @@ d3.json("js/data.json", function(error, graph) {
     //--position nodes---
     force.on("tick", function() {
 
-        var yPos = d3.scale.linear()
-            .domain([0, 3400])
-            .range([0, h-75]);
-        var xPos = d3.scale.linear()
-            .domain([0, 3400])
-            .range([0, w]);
-
         node.attr("transform", function(d) {
             return "translate(" + xPos(d.illX) + "," + yPos(d.illY) + ")";
         });
@@ -351,12 +425,10 @@ d3.json("js/data.json", function(error, graph) {
             height = window.innerHeight;
         svg.attr("width", width).attr("height", height);
 
-        force.size([force.size()[0] + (width - w) / zoom.scale(), force.size()[1] + (height - h) / zoom.scale()]).resume();
-        w = width;
-        h = height;
+        force.size([force.size()[0] + (width - wW) / zoom.scale(), force.size()[1] + (height - wH) / zoom.scale()]).resume();
+        wW = width;
+        wH = height;
     }
-
-
 
 });
 
