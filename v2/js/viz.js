@@ -84,10 +84,12 @@ nhlButton2.on("click", function() {
 
 // ---------THE SET-UP---------
 // --sizes--
-var wW = window.innerWidth;
-var wH = window.innerHeight;
-var w = 2000;
-var h = 1500;
+var w = window.innerWidth;
+var h = window.innerHeight;
+// var w = 2000;
+// var h = 1500;
+
+console.log(w + ", ", + h)
 
 // --set default modes--
 var focus_node = null,
@@ -101,15 +103,15 @@ var highlight_trans = 0.1;
 // --set up scale by number of wins--
 var winScale = d3.scale.linear()
     .domain([0, 1237])
-    .range([1000, 15000]);
+    .range([(w/3), (h*5)]);
 
 // --set up x and y position scales-- 
 var yPos = d3.scale.linear()
     .domain([0, 1500])
-    .range([0, h-75]);
+    .range([-75, h-75+100]);
 var xPos = d3.scale.linear()
     .domain([0, 1500])
-    .range([0, w]);
+    .range([-75, w+100]);
 
 // --set up force layout--
 var force = d3.layout.force()
@@ -425,9 +427,13 @@ d3.json("js/data.json", function(error, graph) {
             height = window.innerHeight;
         svg.attr("width", width).attr("height", height);
 
-        force.size([force.size()[0] + (width - wW) / zoom.scale(), force.size()[1] + (height - wH) / zoom.scale()]).resume();
-        wW = width;
-        wH = height;
+        force.size([force.size()[0] + (width - w) / zoom.scale(), force.size()[1] + (height - h) / zoom.scale()]).resume();
+        w = width;
+        h = height;
+
+        // force.size([force.size()[0] + (width - wW) / zoom.scale(), force.size()[1] + (height - wH) / zoom.scale()]).resume();
+        // wW = width;
+        // wH = height;
     }
 
 });
