@@ -241,7 +241,7 @@ svg {
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    stroke: rgba(255,255,255,0.5);
+    stroke: rgba(255,255,255,0.8);
     stroke-width: 2px;
     fill: black;
     text-anchor: middle;
@@ -251,7 +251,7 @@ svg {
     font-style: italic;
     text-transform: uppercase;
     letter-spacing: 1px;
-    stroke: rgba(255,255,255,0.5);
+    stroke: rgba(255,255,255,0.8);
     stroke-width: 2px;
     fill: black;
     text-anchor: middle;
@@ -272,6 +272,9 @@ svg {
     stroke: none;
     fill: black;
     text-anchor: middle;
+}
+.edgelabel {
+    
 }
 
 /*-------------------*/
@@ -317,4 +320,8 @@ svg {
 
 .pHeadline {
     font-weight: 500;
+}
+
+.pOppOpp {
+    cursor: pointer;
 }
