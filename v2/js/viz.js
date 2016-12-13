@@ -82,6 +82,63 @@ nhlButton2.on("click", function() {
 
 
 
+// ---------THE INFO BOX---------
+var introDown = false;
+var down = d3.select(".title").append("div").attr("id", "down").style("display", "inline-block");
+down.html('<div class="down"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div>')
+
+var introHeight = document.getElementById("intro").offsetHeight;
+
+var downStart = "rotate(0deg)";
+var downEnd = "rotate(180deg)";
+var downBetween = d3.interpolateString(downStart, downEnd);
+var upBetween = d3.interpolateString(downEnd, downStart);
+
+var intro = d3.select(".intro");
+intro.style("top", (-introHeight) + "px");
+
+down.on("click", function(d) {
+    if (introDown == false){
+        showIntro();
+    }else{
+        hideIntro();
+    }
+});
+
+// d3.select(".title").on("click", function(d) {
+//     if (introDown == false){
+//         showIntro();
+//     }else{
+//         hideIntro();
+//     }
+// })
+
+function showIntro() {
+    down.transition().ease('sin-in-out')
+        .styleTween('transform', function (d) {
+        return downBetween;
+    });
+        
+    intro.transition()
+         .duration(500)
+         .style("top", "75px");
+    introDown = true;
+};
+
+function hideIntro() {
+    down.transition()
+        .styleTween('transform', function (d) {
+        return upBetween;
+    });
+    intro.transition()
+         .duration(500)
+         .style("top", (-introHeight - 75) + "px");
+    introDown = false;
+}
+
+
+
+
 // ---------THE SET-UP---------
 // --sizes--
 var w = window.innerWidth;
@@ -135,7 +192,8 @@ var clicked = false;
 // var popup = d3.select("svg").append("div").attr("class", "popup");
 // popup.style("top", "100px").style("right", "100px").html("test");
 
-var popup = d3.select("#visualization").append("div").attr("class", "popup");
+var popup = d3.select("#visualization").append("div").attr("class", "popupLink");
+var popupLink = d3.select("#visualization").append("div").attr("class", "popupLink");
 
 
 
@@ -155,13 +213,13 @@ d3.json("js/data.json", function(error, graph) {
         return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index] || a.index == b.index;
     }
 
-    function hasConnections(a) {
-        for (var property in linkedByIndex) {
-            s = property.split(",");
-            if ((s[0] == a.index || s[1] == a.index) && linkedByIndex[property]) return true;
-        }
-        return false;
-    }
+    // function hasConnections(a) {
+    //     for (var property in linkedByIndex) {
+    //         s = property.split(",");
+    //         if ((s[0] == a.index || s[1] == a.index) && linkedByIndex[property]) return true;
+    //     }
+    //     return false;
+    // }
 
     force.nodes(graph.nodes)
         .links(graph.links)
@@ -193,10 +251,10 @@ d3.json("js/data.json", function(error, graph) {
         .data(graph.nodes)
         .enter().append("g")
         .attr("id", function(d) {
-            return d.id;
+            return d.bothTeams;
         })
         .attr("class", function(d) {
-            return d.class;
+            return 'node ' + d.class;
         })
         .style("stroke", function(d) {
             return d.colour;
@@ -220,15 +278,18 @@ d3.json("js/data.json", function(error, graph) {
             })
             .type(function(d) {
                 return d.type;
-            }));
+            }))
+        .attr("id", function(d) {
+            return d.bothTeams
+        });
     
     var edgelabelsBG = g.selectAll(".edgelabelBG")
         .data(graph.links)
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'edlabelBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams},
-               'id':function(d,i){return 'edgelabelBG-'+d.id},
+        .attr({'class':function(d){return 'edlabelBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+               'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d){ 
                     var x1 = xPos(parseFloat(d.source.illX));
                     var y1 = yPos(parseFloat(d.source.illY));
@@ -250,8 +311,8 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'edlabelM edgelabel '+d.source.bothTeams+' '+d.target.bothTeams},
-               'id':function(d,i){return 'edgelabelM-'+d.id},
+        .attr({'class':function(d){return 'edgelabelM edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+               'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d){ 
                     var x1 = xPos(parseFloat(d.source.illX));
                     var y1 = yPos(parseFloat(d.source.illY));
@@ -273,8 +334,8 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){ return 'edlabelWBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams},
-               'id':function(d,i){return 'edgelabelWBG-'+d.id},
+        .attr({'class':function(d){ return 'edlabelWBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+               'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d) {
                    return dxScale(d.source.wins);
                },
@@ -292,8 +353,8 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){ return 'edlabelLBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams},
-               'id':function(d,i){return 'edgelabelLBG-'+d.id},
+        .attr({'class':function(d){ return 'edlabelLBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+               'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d) {
                    var x1 = xPos(parseFloat(d.source.illX));
                     var y1 = yPos(parseFloat(d.source.illY));
@@ -316,8 +377,8 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'edlabelW edgelabel '+d.source.bothTeams+' '+d.target.bothTeams},
-               'id':function(d,i){return 'edgelabelW-'+d.id},
+        .attr({'class':function(d){return 'edlabelW edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+               'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d) {
                    return dxScale(d.source.wins);
                },
@@ -334,8 +395,8 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'edlabelL edgelabel '+d.source.bothTeams+' '+d.target.bothTeams},
-               'id':function(d,i){return 'edgelabelL-'+d.id},
+        .attr({'class':function(d){return 'edlabelL edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+               'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d) {
                    var x1 = xPos(parseFloat(d.source.illX));
                     var y1 = yPos(parseFloat(d.source.illY));
@@ -381,68 +442,76 @@ d3.json("js/data.json", function(error, graph) {
         .attr('xlink:href',function(d,i) {return '#' + d.id})
         .style("pointer-events", "none")
         .text(function(d) { return d.target.wins + "w"});
-    
-    
-    
-    // label: team city
-    var nLabelC = g.selectAll(".text")
-        .data(graph.nodes)
-        .enter().append("text")
-        .attr("dy", "0em")
-        .attr("id", "nLabelC")
-        .attr("class", function(d) {
-            return d.class;
-        })
-        .text(function(d) {
-            return d.teamLocation
-        })
-    var nLabelCF = g.selectAll(".text")
-        .data(graph.nodes)
-        .enter().append("text")
-        .attr("dy", "0em")
-        .attr("id", "nLabelCF")
-        .attr("class", function(d) {
-            return d.class;
-        })
-        .text(function(d) {
-            return d.teamLocation
-        })
 
-    // label: team name
-    var nLabelN = g.selectAll(".text")
-        .data(graph.nodes)
-        .enter().append("text")
-        .attr("dy", ".8em")
-        .attr("id", "nLabelN")
-        .attr("class", function(d) {
-            return d.class;
-        })
-        .text(function(d) {
-            return d.teamName
-        });
-    var nLabelNF = g.selectAll(".text")
-        .data(graph.nodes)
-        .enter().append("text")
-        .attr("dy", ".8em")
-        .attr("id", "nLabelNF")
-        .attr("class", function(d) {
-            return d.class;
-        })
-        .text(function(d) {
-            return d.teamName
-        });
     
-    nLabelC.attr("transform", function(d) {
-            return "translate(" + xPos(parseFloat(d.illX)) + "," + yPos(parseFloat(d.illY)) + ")";
-        });
-    nLabelN.attr("transform", function(d) {
-            return "translate(" + xPos(parseFloat(d.illX)) + "," + yPos(parseFloat(d.illY)) + ")";
-    });
+    
+    var nodeLabelsCBG = g.selectAll(".nodeLabelsCBG")
+        .data(graph.labels)
+        .enter()
+        .append("text")
+        .style("pointer-events", "none")
+        .attr({'class':function(d){return 'nodeLabelsCBG nodeLabels ' + d.class},
+              'id':function(d){return 'nodeLabels-' + d.teamSmall},
+              'x': function(d){return xPos(parseFloat(d.illX))},
+              'y': function(d){return yPos(parseFloat(d.illY))},
+              'dy':'0em',
+              'text-anchor': 'middle',
+              'stroke': 'rgba(255,255,255,.8)',
+              'stroke-width': '2px'
+        })
+        .text(function(d) {return d.teamLocation});
+    
+     var nodeLabelsNBG = g.selectAll(".nodeLabelsNBG")
+        .data(graph.labels)
+        .enter()
+        .append("text")
+        .style("pointer-events", "none")
+        .attr({'class':function(d){return 'nodeLabelsNBG nodeLabels ' + d.class},
+              'id':function(d){return 'nodeLabels-' + d.teamSmall},
+              'x': function(d){return xPos(parseFloat(d.illX))},
+              'y': function(d){return yPos(parseFloat(d.illY))},
+              'dy':'.8em',
+              'text-anchor': 'middle',
+              'stroke': 'rgba(255,255,255,.8)',
+              'stroke-width': '2px'
+        })
+        .text(function(d) {return d.teamName});
+        
+    var nodeLabelsC = g.selectAll(".nodeLabelsC")
+        .data(graph.labels)
+        .enter()
+        .append("text")
+        .style("pointer-events", "none")
+        .attr({'class':function(d){return 'nodeLabelsC nodeLabels ' + d.class},
+              'id':function(d){return 'nodeLabels-' + d.teamSmall},
+              'x': function(d){return xPos(parseFloat(d.illX))},
+              'y': function(d){return yPos(parseFloat(d.illY))},
+              'dy':'0em',
+              'text-anchor': 'middle',
+              'stroke': 'none'
+        })
+        .text(function(d) {return d.teamLocation});
+    
+    var nodeLabelsN = g.selectAll(".nodeLabelsN")
+        .data(graph.labels)
+        .enter()
+        .append("text")
+        .style("pointer-events", "none")
+        .attr({'class':function(d){return 'nodeLabelsN nodeLabels ' + d.class},
+              'id':function(d){return 'nodeLabels-' + d.teamSmall},
+              'x': function(d){return xPos(parseFloat(d.illX))},
+              'y': function(d){return yPos(parseFloat(d.illY))},
+              'dy':'.8em',
+              'text-anchor': 'middle',
+              'stroke': 'none'
+        })
+        .text(function(d) {return d.teamName});
+    
 
     // node interaction
     node.on("mouseover", function(d) {
             if (clicked == false) {
-            set_highlight(d);
+                set_highlight(d);
             }
         })
         .on("click", function(d) {
@@ -460,34 +529,66 @@ d3.json("js/data.json", function(error, graph) {
         });
         
     link.on("mouseover", function(d) {
-        if (clicked == false){
-            set_highlightLink(d);
-        }
-    })
-    .on("mouseout", function(d) {
-        if (clicked == false){
-            exit_highlight(d);
-        }
-    });
+            if (clicked == false){
+                set_highlightLink(d);
+            }
+        })
+        .on("click", function(d) {
+            if (clicked == false){
+                linkPop(d);
+            }else{
+                linkPopOut();
+            }
+        })
+        .on("mouseout", function(d) {
+            if (clicked == false){
+                exit_highlightLink(d);
+            }
+        });
 
     // ----THE POPUPS----
     function nodePop(d) {
         clicked = true;
-        popup.style("display", "block")
-            .html("<div class='pHeader'><div class='pOut'>"+d.team+"</div></div><div class='pInfo'><span class='pHeadline'>League: </span>"+d.league+"<br><span class='pHeadline'>City: </span>"+d.city+"<br><br><span class='pHeadline'>Rivalries: </span></div>");
+        popupLink.style("display", "block")
+            .html("<div class='popupLinkHeader'>    <div class='popupLinkHeaderInner'>"+d.team+" <span id='versus'>vs</span> "+d.opponentTeam+"</div></div><div class='popupLinkBottom'>    <div class='linkColours'>        <div class='coloursLeft'>            <div class='cLeft'>                <div class='linkColoursSourceOne'></div>                <div class='linkColoursSourceTwo'></div>                <div class='linkColoursSourceThree'></div>            </div>        </div>        <div class='coloursRight'>            <div class='cRight'>                <div class='linkColoursTargetOne'></div>                <div class='linkColoursTargetTwo'></div>                <div class='linkColoursTargetThree'></div>            </div>        </div>    </div>    <div class='popupLinkTitle'>"+d.rivalryType+" Rivalry<br>"+d.rivalryName+"</div>   <div class='popupLinkStats'><div class='statsLeft'>"+d.gamesPlayed+"<div class='sL' id='sGPL'></div></div>        <div class='statsCenter'>GP</div>        <div class='statsRight'><div class='sR' id='sGPR'></div>"+d.gamesPlayed+"</div><div class='statsLeft'>"+d.wins+"<div class='sL' id='sWL'></div></div>        <div class='statsCenter'>W</div>        <div class='statsRight'><div class='sR' id='sWR'></div>"+d.oWins+"</div><div class='statsLeft'>"+d.ties+"<div class='sL' id='sTL'></div></div>        <div class='statsCenter'>T</div>        <div class='statsRight'><div class='sR' id='sTR'></div>"+d.oTies+"</div><div class='statsLeft'>"+d.losses+"<div class='sL' id='sLL'></div></div>        <div class='statsCenter'>L</div>        <div class='statsRight'><div class='sR' id='sLR'></div>"+d.oLosses+"</div><div class='statsLeft'>"+d.otLosses+"<div class='sL' id='sOTLL'></div></div>        <div class='statsCenter'>OTL</div>        <div class='statsRight'><div class='sR' id='sOTLR'></div>"+d.oOtLosses+"</div><div class='statsLeft'>"+d.for+"<div class='sL' id='sFL'></div></div>        <div class='statsCenter'>+</div>        <div class='statsRight'><div class='sR' id='sFR'></div>"+d.oFor+"</div><div class='statsLeft'>"+d.against+"<div class='sL' id='sAL'></div></div>        <div class='statsCenter'>-</div>        <div class='statsRight'><div class='sR' id='sAR'></div>"+d.oAgainst+"</div>    </div>    <div class='popupLinkP'><p>"+d.rivalryNotes+"</p>    </div><div class='popupLinkFootnote'>Text automatically generated from Wikipedia. Problems? <a href='mailto:sam.vickars@gmail.com'>Let me know!</a></div></div>");
             
-        for (var i=0; i<d.info.length; i++) {
-            var pOppData = d.info;
+        // for (var i=0; i<d.info.length; i++) {
+        //     var pOppData = d.info;
             
-            var pOpp = d3.select(".pInfo").append("div").attr("class", "pOpp").attr("id", "pOpp-" + d.info[i].opponentWins);
-            pOpp.html("vs. <span class='pOppOpp pOppOpp-"+d.info[i].opponentWins+"'>" + d.info[i].opponent + "</span> (<strong>" + d.info[i].wins + "</strong>W <strong>" + d.info[i].losses + "</strong>L)");
+        //     var pOpp = d3.select(".pInfo").append("div").attr("class", "pOpp").attr("id", "pOpp-" + d.info[i].opponentWins);
+        //     pOpp.html("vs. <span class='pOppOpp pOppOpp-"+d.info[i].opponentWins+"'>" + d.info[i].opponent + "</span> (<strong>" + d.info[i].wins + "</strong>W <strong>" + d.info[i].losses + "</strong>L)");
             
-            d3.select("#pOpp-"+d.info[i].opponentWins).on("mouseover", function(d) {
-                pOppOver(d, i);
-            });
-            
-            
-        }
+        //     d3.select("#pOpp-"+d.info[i].opponentWins).on("mouseover", function(d) {
+        //         pOppOver(d, i);
+        //     });
+        // }
+        
+        d3.select("#sGPL").style("width", ((100) * .5) +"%");
+        d3.select("#sGPR").style("width", ((100) * .5) +"%");
+        d3.select("#sWL").style("width", ((d.wins / d.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sWR").style("width", ((d.oWins / d.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sTL").style("width", ((d.ties / d.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sTR").style("width", ((d.oTies / d.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sLL").style("width", ((d.losses / d.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sLR").style("width", ((d.oLosses / d.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sOTLL").style("width", ((d.otLosses / d.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sOTLR").style("width", ((d.oOtLosses / d.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sFL").style("width", (d.for / ((parseFloat(d.for)+parseFloat(d.against))) * 100*1.5) +"%");
+        d3.select("#sFR").style("width", (d.oFor / ((parseFloat(d.for)+parseFloat(d.against))) * 100*1.5) +"%");
+        d3.select("#sAL").style("width", (d.against / ((parseFloat(d.for)+parseFloat(d.against))) * 100*1.5) +"%");
+        d3.select("#sAR").style("width", (d.oAgainst / ((parseFloat(d.for)+parseFloat(d.against))) * 100*1.5) +"%");
+        
+        d3.selectAll(".sL").style("background-color", d.cBack);
+        d3.selectAll(".sR").style("background-color", d.ocBack);
+        
+        d3.select(".cLeft").style("width", ((d.wins / d.gamesPlayed) * 100*1.5) + "%");
+        d3.select(".cRight").style("width", ((d.oWins / d.gamesPlayed) * 100*1.5) + "%");
+        d3.select(".linkColoursSourceOne").style("background-color", d.cBack);
+        d3.select(".linkColoursSourceTwo").style("background-color", d.cOutline);
+        d3.select(".linkColoursSourceThree").style("background-color", d.cText);
+        d3.select(".linkColoursTargetOne").style("background-color", d.ocText);
+        d3.select(".linkColoursTargetTwo").style("background-color", d.ocOutline);
+        d3.select(".linkColoursTargetThree").style("background-color", d.ocBack);
         
         function pOppOver(d) {
             console.log(d);
@@ -499,124 +600,98 @@ d3.json("js/data.json", function(error, graph) {
         d3.select(".pInfo").style("border", "3px solid " + d.cBack);
     }
     
+    function linkPop(d) {
+        clicked = true;
+        popupLink.style("display", "block")
+            .html("<div class='popupLinkHeader'>    <div class='popupLinkHeaderInner'>"+d.source.team+" <span id='versus'>vs</span> "+d.source.opponentTeam+"</div></div><div class='popupLinkBottom'>    <div class='linkColours'>        <div class='coloursLeft'>            <div class='cLeft'>                <div class='linkColoursSourceOne'></div>                <div class='linkColoursSourceTwo'></div>                <div class='linkColoursSourceThree'></div>            </div>        </div>        <div class='coloursRight'>            <div class='cRight'>                <div class='linkColoursTargetOne'></div>                <div class='linkColoursTargetTwo'></div>                <div class='linkColoursTargetThree'></div>            </div>        </div>    </div>    <div class='popupLinkTitle'>"+d.source.rivalryType+" Rivalry<br>"+d.source.rivalryName+"</div>    <div class='popupLinkStats'>        <div class='statsLeft'>"+d.source.gamesPlayed+"            <div class='sL' id='sGPL'></div>        </div>        <div class='statsCenter'>GP</div>        <div class='statsRight'>            <div class='sR' id='sGPR'></div>"+d.source.gamesPlayed+"</div>        <div class='statsLeft'>"+d.source.wins+"            <div class='sL' id='sWL'></div>        </div>        <div class='statsCenter'>W</div>        <div class='statsRight'>            <div class='sR' id='sWR'></div>"+d.source.oWins+"</div>        <div class='statsLeft'>"+d.source.ties+"            <div class='sL' id='sTL'></div>        </div>        <div class='statsCenter'>T</div>        <div class='statsRight'>            <div class='sR' id='sTR'></div>"+d.source.oTies+"</div>        <div class='statsLeft'>"+d.source.losses+"            <div class='sL' id='sLL'></div>        </div>        <div class='statsCenter'>L</div>        <div class='statsRight'>            <div class='sR' id='sLR'></div>"+d.source.oLosses+"</div>        <div class='statsLeft'>"+d.source.otLosses+"            <div class='sL' id='sOTLL'></div>        </div>        <div class='statsCenter'>OTL</div>        <div class='statsRight'>            <div class='sR' id='sOTLR'></div>"+d.source.oOtLosses+"</div>        <div class='statsLeft'>"+d.source.for+"            <div class='sL' id='sFL'></div>        </div>        <div class='statsCenter'>+</div>        <div class='statsRight'>            <div class='sR' id='sFR'></div>"+d.source.oFor+"</div>        <div class='statsLeft'>"+d.source.against+"            <div class='sL' id='sAL'></div>        </div>        <div class='statsCenter'>-</div>        <div class='statsRight'>            <div class='sR' id='sAR'></div>"+d.source.oAgainst+"</div>    </div>    <div class='popupLinkP'>        <p>"+d.source.rivalryNotes+"</p>    </div>    <div class='popupLinkFootnote'>Text automatically generated from Wikipedia. Problems? <a href='mailto:sam.vickars@gmail.com'>Let me know!</a></div></div>");
+            
+        
+        d3.select("#sGPL").style("width", ((100) * .5) +"%");
+        d3.select("#sGPR").style("width", ((100) * .5) +"%");
+        d3.select("#sWL").style("width", ((d.source.wins / d.source.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sWR").style("width", ((d.source.oWins / d.source.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sTL").style("width", ((d.source.ties / d.source.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sTR").style("width", ((d.source.oTies / d.source.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sLL").style("width", ((d.source.losses / d.source.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sLR").style("width", ((d.source.oLosses / d.source.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sOTLL").style("width", ((d.source.otLosses / d.source.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sOTLR").style("width", ((d.source.oOtLosses / d.source.gamesPlayed) * 100*1.5) +"%");
+        d3.select("#sFL").style("width", (d.source.for / ((parseFloat(d.source.for)+parseFloat(d.source.against))) * 100*1.5) +"%");
+        d3.select("#sFR").style("width", (d.source.oFor / ((parseFloat(d.source.for)+parseFloat(d.source.against))) * 100*1.5) +"%");
+        d3.select("#sAL").style("width", (d.source.against / ((parseFloat(d.source.for)+parseFloat(d.source.against))) * 100*1.5) +"%");
+        d3.select("#sAR").style("width", (d.source.oAgainst / ((parseFloat(d.source.for)+parseFloat(d.source.against))) * 100*1.5) +"%");
+        
+        d3.selectAll(".sL").style("background-color", d.source.cBack);
+        d3.selectAll(".sR").style("background-color", d.source.ocBack);
+        
+        d3.select(".cLeft").style("width", ((d.source.wins / d.source.gamesPlayed) * 100*1.5) + "%");
+        d3.select(".cRight").style("width", ((d.target.wins / d.target.gamesPlayed) * 100*1.5) + "%");
+        d3.select(".linkColoursSourceOne").style("background-color", d.source.cBack);
+        d3.select(".linkColoursSourceTwo").style("background-color", d.source.cOutline);
+        d3.select(".linkColoursSourceThree").style("background-color", d.source.cText);
+        d3.select(".linkColoursTargetOne").style("background-color", d.target.cText);
+        d3.select(".linkColoursTargetTwo").style("background-color", d.target.cOutline);
+        d3.select(".linkColoursTargetThree").style("background-color", d.target.cBack);
+    }
+    
+    
     function popOut() {
         clicked = false;
-        popup.style("display", "none");
+        popupLink.style("display", "none");
+    }
+    
+    function linkPopOut() {
+        clicked = false;
+        popupLink.style("display", "none");
     }
 
     // ----THE MOUSE----
     // --mouseover--
+    function label_highlight(d) {
+        console.log("hi");
+    }
     function set_highlightLink(d) {
         svg.style("cursor", "pointer");
         d3.selectAll(".node").style("stroke", "rgba(0,0,0,0.05)");
         d3.selectAll(".link").style("stroke", "rgba(0,0,0,0.05)");
-        d3.select("#" + d.source.id).style("stroke", "black");
-        d3.select("#" + d.target.id).style("stroke", "black");
-        d3.select("#" + d.fullId).style("stroke", "black");
+        circle.style("stroke", "rgba(0,0,0,0.05");
+        d3.selectAll(".edgelabel").style("opacity", "0.1");
+        d3.selectAll(".nodeLabels").style("opacity", "0.1");
+        d3.selectAll("#" + d.source.bothTeams).style("stroke", d.colour);
+        d3.selectAll("#" + d.target.bothTeams).style("stroke", d.colour);
+        d3.selectAll("#edgelabel-" + d.id).style("opacity", "1.0");
+        d3.selectAll("#nodeLabels-" + d.source.teamSmall).style("opacity", "1.0");
+        d3.selectAll("#nodeLabels-" + d.target.teamSmall).style("opacity", "1.0");
     }
     function exit_highlightLink(d) {
         svg.style("cursor", "move");
-        
+        d3.selectAll(".edgelabel").style("opacity", "1.0");
+        d3.selectAll(".nodeLabels").style("opacity", "1.0");
+        circle.style("stroke", function(d) {return d.colour;});
+        link.style("stroke", function(d) {return d.colour;});
+        // d3.selectAll(".nodeLabels").style("opacity", "1.0");
     }
     function set_highlight(d) {
+        console.log(d);
         svg.style("cursor", "pointer");
-        if (focus_node !== null) d = focus_node;
-        highlight_node = d;
-        
-        if (highlight_color != "white") {
-            circle.style("stroke", function(o) {
-                return isConnected(d, o) ? d.colour : "rgba(0,0,0,0.05)";
-            });
-            nLabelC.style("font-weight", function(o) {
-                return isConnected(d, o) ? "600" : "normal";
-            });
-            nLabelC.style("opacity", function(o) {
-                return isConnected(d, o) ? 1 : 0.1;
-            })
-            nLabelN.style("font-weight", function(o) {
-                return isConnected(d, o) ? "bold" : "normal";
-            });
-            nLabelN.style("opacity", function(o) {
-                return isConnected(d, o) ? 1 : 0.1;
-            })
-            nLabelCF.style("font-weight", function(o) {
-                return isConnected(d, o) ? "600" : "normal";
-            });
-            nLabelCF.style("opacity", function(o) {
-                return isConnected(d, o) ? 1 : 0.1;
-            })
-            nLabelNF.style("font-weight", function(o) {
-                return isConnected(d, o) ? "bold" : "normal";
-            });
-            nLabelNF.style("opacity", function(o) {
-                return isConnected(d, o) ? 1 : 0.1;
-            })
-            // edgelabels.style("opacity", function(o) {
-            //     return isConnected(d, o) ? 1 : 0.1;
-            // })
-            // edgelabelsW.style("opacity", function(o) {
-            //     return isConnected(d, o) ? 1 : 0.1;
-            // })
-            // edgelabelsL.style("opacity", function(o) {
-            //     return isConnected(d, o) ? 1 : 0.1;
-            // })
-            // edgelabelsBG.style("opacity", function(o) {
-            //     return isConnected(d, o) ? 1 : 0.1;
-            // })
-            // edgelabelsWBG.style("opacity", function(o) {
-            //     return isConnected(d, o) ? 1 : 0.1;
-            // })
-            // edgelabelsLBG.style("opacity", function(o) {
-            //     return isConnected(d, o) ? 1 : 0.1;
-            // })
-            link.style("stroke", function(o) {
-                return o.source.index == d.index || o.target.index == d.index ? d.colour : ((isNumber(o.score) && o.score >= 0) ? d.colour : "rgba(0,0,0,0.05)");
-            });
-        }
+        circle.style("stroke", function(o) {return isConnected(d, o) ? d.colour : "rgba(0,0,0,0.05)";});
+        link.style("stroke", function(o) {return o.source.index == d.index || o.target.index == d.index ? d.colour : "rgba(0,0,0,0.05)";});
         d3.selectAll(".edgelabel").style("opacity", "0.1");
-        d3.selectAll("." + d.bothTeams).style("opacity", "1.0");
+        d3.selectAll(".nodeLabels").style("opacity", "0.1");
+        d3.selectAll("#edgelabel-" + d.bothTeams).style("opacity", "1.0");
+        d3.selectAll("#edgelabel-" + d.bothTeamsBackwards).style("opacity", "1.0");
+        d3.selectAll("#nodeLabels-" + d.teamSmall).style("opacity", "1.0");
+        d3.selectAll("#nodeLabels-" + d.opponent).style("opacity", "1.0");
     }
 
     // --mouseout--
     function exit_highlight() {
-        highlight_node = null;
+        svg.style("cursor", "move");
         d3.selectAll(".edgelabel").style("opacity", "1.0");
-        if (focus_node === null) {
-            svg.style("cursor", "move");
-            if (highlight_color != "white") {
-                circle.style("stroke", function(d) {
-                    return d.colour;
-                });
-                nLabelC.style("font-weight", "normal")
-                    .style("opacity", 1.0);
-                nLabelN.style("font-weight", "normal")
-                    .style("opacity", 1.0);
-                link.style("stroke", function(d) {
-                    return d.colour;
-                });
-            }
-        }
+        d3.selectAll(".nodeLabels").style("opacity", "1.0");
+        circle.style("stroke", function(d) {return d.colour;});
+        link.style("stroke", function(d) {return d.colour;});
     }
-
-    // function set_focus(d) {
-    //     if (highlight_trans < 1) {
-    //         circle.style("opacity", function(o) {
-    //             return isConnected(d, o) ? 1 : highlight_trans;
-    //         });
-
-    //         nLabelC.style("opacity", function(o) {
-    //             return isConnected(d, o) ? 1 : highlight_trans;
-    //         });
-
-    //         nLabelN.style("opacity", function(o) {
-    //             return isConnected(d, o) ? 1 : highlight_trans;
-    //         });
-
-    //         link.style("opacity", function(o) {
-    //             return o.source.index == d.index || o.target.index == d.index ? 1 : highlight_trans;
-    //         });
-    //     }
-    // }
 
     // --zoomskies--
     zoom.on("zoom", function() {
@@ -634,18 +709,6 @@ d3.json("js/data.json", function(error, graph) {
     force.on("tick", function() {
 
         node.attr("transform", function(d) {
-            return "translate(" + xPos(parseFloat(d.illX)) + "," + yPos(parseFloat(d.illY)) + ")";
-        });
-        nLabelC.attr("transform", function(d) {
-            return "translate(" + xPos(parseFloat(d.illX)) + "," + yPos(parseFloat(d.illY)) + ")";
-        });
-        nLabelCF.attr("transform", function(d) {
-            return "translate(" + xPos(parseFloat(d.illX)) + "," + yPos(parseFloat(d.illY)) + ")";
-        });
-        nLabelN.attr("transform", function(d) {
-            return "translate(" + xPos(parseFloat(d.illX)) + "," + yPos(parseFloat(d.illY)) + ")";
-        });
-        nLabelNF.attr("transform", function(d) {
             return "translate(" + xPos(parseFloat(d.illX)) + "," + yPos(parseFloat(d.illY)) + ")";
         });
         
@@ -692,3 +755,7 @@ d3.json("js/data.json", function(error, graph) {
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});

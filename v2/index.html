@@ -29,24 +29,166 @@
         </div>
         <div class="row">
             <div class="headly">
-                <div class="col-sm-7 hidden-xs">
+                <div class="col-sm-7 hidden-xs top">
                     <div class="title">
                         <h1>The Biggest Rivalries in Sports</h1>
                     </div>
                 </div>
-                <div class="col-sm-5 col-xs-12">
+                <div class="col-sm-5 col-xs-12 top">
                     <div class="filters" id="filters">
                         <div class="fLeft"></div>
                         <span class="meghan" id="cflButton">CFL</span><span class="meghan" id="cflButton2">CFL</span><span class="meghan" id="mlbButton">MLB</span><span class="meghan" id="mlbButton2">MLB</span><span class="meghan" id="mlsButton">MLS</span>
                         <span class="meghan" id="mlsButton2">MLS</span><span class="meghan" id="nbaButton">NBA</span><span class="meghan" id="nbaButton2">NBA</span><span class="meghan" id="nflButton">NFL</span><span class="meghan" id="nflButton2">NFL</span>
-                        <span
-                            class="meghan" id="nhlButton">NHL</span>
-                            <span class="meghan" id="nhlButton2">NHL</span>
-                            <div class="fRight"></div>
-                            <div class="fLabels" id="fLeagues">Filter by League</div>
+                        <span class="meghan" id="nhlButton">NHL</span>
+                        <span class="meghan" id="nhlButton2">NHL</span>
+                        <div class="fRight"></div>
+                        <div class="fLabels" id="fLeagues">Filter by League</div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="intro" id="intro">
+            <div class="row">
+                <div class="col-sm-7 introDesc">
+                    Intense rivalries have played an integral role in professional sports since professional sports began. While the competitive pressure affects players, coaches, and managers, it is perhaps felt most by the fans. Although often manifested in friendly competition, matchups occasionally lead to serious violence in the game and also in the stands. Shown here are 127 rivalries (shown as thin lines) between 121 teams (shown as circles placed <em>almost</em> geographicly) in six major North American professional sports leagues.
+                </div>
+                <div class="col-sm-2 hidden-xs introUpdate">
+                    Last updated <strong>8 Dec 2016</strong><br>
+                    <span>Automatically Updated Every Thursday</span>
+                </div>
+                <div class="col-sm-2 hidden-xs introUpdate">
+                    See the live data source here: <strong>[link]</strong><br>
+                    See it as a Google Sheet here: <strong>[link]</strong>
+                </div>
+            </div>
+            <div class="row introLegend">
+                <div class="col-sm-2 vcenter">
+                    <div class="introSection iLeagues">
+                        <div class="sLeft"></div>
+                        <div class="row leagueRow">
+                            <div class="col-xs-4 col-sm-2 leagueColours">
+                                <div class="leagueC" id="lCFL"></div>
+                            </div>
+                            <div class="col-xs-8 col-sm-10 leagueNames">
+                                <div id="lCFLname">
+                                    Canadian Football League
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row leagueRow">
+                            <div class="col-xs-4 col-sm-2 leagueColours">
+                                <div class="leagueC" id="lMLB"></div>
+                            </div>
+                            <div class="col-xs-8 col-sm-10 leagueNames">
+                                <div id="lMLBname">
+                                    Major League Baseball
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row leagueRow">
+                            <div class="col-xs-4 col-sm-2 leagueColours">
+                                <div class="leagueC" id="lMLS"></div>
+                            </div>
+                            <div class="col-xs-8 col-sm-10 leagueNames">
+                                <div id="lMLSname">
+                                    Major League Soccer
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row leagueRow">
+                            <div class="col-xs-4 col-sm-2 leagueColours">
+                                <div class="leagueC" id="lNBA"></div>
+                            </div>
+                            <div class="col-xs-8 col-sm-10 leagueNames">
+                                <div id="lNBAname">
+                                    National Basketball Association
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row leagueRow">
+                            <div class="col-xs-4 col-sm-2 leagueColours">
+                                <div class="leagueC" id="lNFL"></div>
+                            </div>
+                            <div class="col-xs-8 col-sm-10 leagueNames">
+                                <div id="lNFLname">
+                                    National Football League
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row leagueRow">
+                            <div class="col-xs-4 col-sm-2 leagueColours">
+                                <div class="leagueC" id="lNHL"></div>
+                            </div>
+                            <div class="col-xs-8 col-sm-10 leagueNames">
+                                <div id="lNHLname">
+                                    National Hockey League
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sRight"></div>
+                    <div class="fLabels" id="introLabels">Leagues</div>
+                    </div>
+                </div>
+                <div class="col-sm-2 vcenter">
+                    <div class="introSection iSizes">
+                        <div class="sLeft"></div>
+                            <div class="row sizes">
+                                
+                                <div class="col-xs-5 sizeLarge">
+                                    <div id="sizeLarge"></div>
+                                </div>
+                                <div class="col-xs-4 sizeMed">
+                                    <div id="sizeMed"></div>
+                                </div>
+                                <div class="col-xs-3 sizeSmall">
+                                    <div id="sizeSmall"></div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="arrowLine">Many<span id="spacer"></span>Few</div>
+                            </div>
+                            <div class="row sizesSub">
+                                <h5>Number of Games Won in Head-to-Head Matchups</h5>
+                                <span class="storySub"><p>Each circle marks a team’s location and is sized by the number of wins against the team to which it is connected (a rivalry)</p></span>
+                            </div>
+                        <div class="sRight"></div>
+                        <div class="fLabels" id="introLabels">Rivalry Intensity</div>
+                    </div>
+                </div>
+                <div class="col-sm-2 vcenter">
+                    <div class="introSection iTypes">
+                        <div class="sLeft"></div>
+                        <h5>Territorial <span id="iIcon"><a href="#" data-toggle="popover" data-container="body" data-trigger="hover" title="Territorial Rivalry" data-content="Between two teams (usually) playing in the same city, often across town from one another"><span id="pop" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></span></h5>
+                        <h5>Geographic <span id="iIcon"><a href="#" data-toggle="popover" data-container="body" data-trigger="hover" title="Geographic Rivalry" data-content="Often known as a battle or derby and based on the close geographical proximity of two teams"><span id="pop" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></span></h5>
+                        <h5>Divisional <span id="iIcon"><a href="#" data-toggle="popover" data-container="body" data-trigger="hover" title="Divisional Rivalry" data-content="Based on divisional familiarity between two teams that face off often in regular season play"><span id="pop" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></span></h5>
+                        <h5>Original Six <span id="iIcon"><a href="#" data-toggle="popover" data-container="body" data-trigger="hover" title="Original Six Rivalry" data-content="Between two of the NHL’s original six teams who have played each other regularly"><span id="pop" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></span></h5>
+                        <h5>Manufactured <span id="iIcon"><a href="#" data-toggle="popover" data-container="body" data-trigger="hover" title="Manufactured Rivalry" data-content="Created by the league or ownership to increase ticket sales or based on a particular event"><span id="pop" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></span></h5>
+                        <h5>Playoff/League/Superbowl <span id="iIcon"><a href="#" data-toggle="popover" data-container="body" data-trigger="hover" title="Playoff/League/Superbowl Rivalry" data-html="true" data-content="Based on games played <em>when it matters</em> (i.e. during the postseason or championships)"><span id="pop" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></span></h5>
+                        <h5>Historical <span id="iIcon"><a href="#" data-toggle="popover" data-container="body" data-trigger="hover" title="Historical Rivalry" data-content="Based on incidents preceding the teams’ formation or on rivalries outside of the sport"><span id="pop" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></span></h5>
+                        <div class="sRight"></div>
+                        <div class="fLabels" id="introLabels">Types of Rivalries</div>
+                    </div>
+                </div>
+                <div class="col-sm-4 vcenter">
+                    <div class="introSection iStories">
+                        <div class="sLeft"></div>
+                        <h5><span class="storyTitle" id="sfGiants-dodgers">Geographic Rivalry (2485 games played) - San Francisco Giants (1237W) vs Los Angeles Dodgers (1202W)</span></h5>
+                        <span class="storySub"><p>These two teams orginally played across town from each other in Brooklyn and New York City beginning in the late 1800s. Their ability to remain foes after a cross-country move and keep the balance has led to this being called one of the greatest rivalries in sports.</p></span>
+                        <h5><span class="storyTitle" id="leafs-canadiens">Original Six/Franco vs Anglo (732 games played) - Toronto Maple Leafs (338W) vs Les Canadiens de Montréal (293W)</span></h5>
+                        <span class="storySub"><p>The oldest in the NHL, the Leafs-Habs rivalry is symbolic of a country divided: the Quebecois Francophones against the Anglophones of the remainder of Canada. The two largest Canadian cities have won the most Stanley Cups of any team, facing off for the cup five times.</p></span>
+                        <h5><span class="storyTitle" id="celtics-lakers">Historical Rivalry (358 games played) - Boston Celtics (199W) vs Los Angeles Lakers (159W)</span></h5>
+                        <span class="storySub"><p>While not the most contested in the NBA, this rivalry involves two of the league’s most storied teams. They have met a record twelve times in the championship series, while their combined 33 trophies account for almost half of the 68 in NBA history.</p></span>
+                        <h5><span class="storyTitle" id="blueBombers-roughriders">The Banjo Bowl (221 games played) - Winnipeg Blue Bombers (126W) vs Saskatchewan Roughriders (91W)</span></h5>
+                        <span class="storySub"><p>Known as the Banjo Bowl (when played on Labour Day) since 2004, this rivalry is older than the Canadian Football League itself and extends far beyond the field, fueled by traditional competition between the two prairie provinces.</p></span>
+                        <h5><span class="storyTitle" id="bears-packers">Divisional Rivalry (187 games played) - Chicago Bears (94W) vs Green Bay Packers (93W)</span></h5>
+                        <span class="storySub"><p>The longest-running in the NFL, this rivalry began in 1921 and is characterized by the balance between the two teams. The mutual Chicago- Wisconsin hatred has sparked similar rivalries in the MLB and NBA, as well as at the collegiate level.</p></span>
+                        <div class="sRight"></div>
+                        <div class="fLabels" id="introLabels">Storied Rivalries</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row introBottom"></div>
         </div>
         <div class="row jayZ">
             <div class="col-xs-12 visualization" id="visualization">
@@ -58,8 +200,8 @@
     
     <!--LOAD SCRIPTS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/viz.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/viz.js"></script>
 </body>
 
 </html>
