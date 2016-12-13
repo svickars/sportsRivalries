@@ -85,7 +85,7 @@ nhlButton2.on("click", function() {
 // ---------THE INFO BOX---------
 var introDown = false;
 var down = d3.select(".title").append("div").attr("id", "down").style("display", "inline-block");
-down.html('<div class="down"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div>')
+down.html('<div class="down"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div>');
 
 var introHeight = document.getElementById("intro").offsetHeight;
 
@@ -105,6 +105,61 @@ down.on("click", function(d) {
     }
 });
 
+d3.select("#lCFLname").on("mouseover", function(d) {
+                        leagueNameHover(".cfl");
+                      })
+                      .on("mouseout", function(d) {
+                          leagueNameHoverExit();
+                      });
+d3.select("#lMLBname").on("mouseover", function(d) {
+                        leagueNameHover(".mlb");
+                      })
+                      .on("mouseout", function(d) {
+                          leagueNameHoverExit();
+                      });
+d3.select("#lMLSLname").on("mouseover", function(d) {
+                        leagueNameHover(".mls");
+                      })
+                      .on("mouseout", function(d) {
+                          leagueNameHoverExit();
+                      });
+d3.select("#lNBALname").on("mouseover", function(d) {
+                        leagueNameHover(".nba");
+                      })
+                      .on("mouseout", function(d) {
+                          leagueNameHoverExit();
+                      });
+d3.select("#lNFLname").on("mouseover", function(d) {
+                        leagueNameHover(".nfl");
+                      })
+                      .on("mouseout", function(d) {
+                          leagueNameHoverExit();
+                      });
+d3.select("#lNHLname").on("mouseover", function(d) {
+                        leagueNameHover(".nhl");
+                      })
+                      .on("mouseout", function(d) {
+                          leagueNameHoverExit();
+                      });
+
+
+function leagueNameHover(league) {
+    d3.selectAll(".cfl").transition().duration(100).style("opacity", "0.1");
+    d3.selectAll(".mlb").transition().duration(100).style("opacity", "0.1");
+    d3.selectAll(".mls").transition().duration(100).style("opacity", "0.1");
+    d3.selectAll(".nba").transition().duration(100).style("opacity", "0.1");
+    d3.selectAll(".nfl").transition().duration(100).style("opacity", "0.1");
+    d3.selectAll(".nhl").transition().duration(100).style("opacity", "0.1");
+    d3.selectAll(league).style("opacity", "1.0");
+}
+function leagueNameHoverExit() {
+    d3.selectAll(".cfl").transition().duration(100).style("opacity", "1");
+    d3.selectAll(".mlb").transition().duration(100).style("opacity", "1");
+    d3.selectAll(".mls").transition().duration(100).style("opacity", "1");
+    d3.selectAll(".nba").transition().duration(100).style("opacity", "1");
+    d3.selectAll(".nfl").transition().duration(100).style("opacity", "1");
+    d3.selectAll(".nhl").transition().duration(100).style("opacity", "1");
+}
 // d3.select(".title").on("click", function(d) {
 //     if (introDown == false){
 //         showIntro();
@@ -581,8 +636,8 @@ d3.json("js/data.json", function(error, graph) {
         d3.selectAll(".sL").style("background-color", d.cBack);
         d3.selectAll(".sR").style("background-color", d.ocBack);
         
-        d3.select(".cLeft").style("width", ((d.wins / d.gamesPlayed) * 100*1.5) + "%");
-        d3.select(".cRight").style("width", ((d.oWins / d.gamesPlayed) * 100*1.5) + "%");
+        // d3.select(".cLeft").style("width", ((d.wins / d.gamesPlayed) * 100*1.5) + "%");
+        // d3.select(".cRight").style("width", ((d.oWins / d.gamesPlayed) * 100*1.5) + "%");
         d3.select(".linkColoursSourceOne").style("background-color", d.cBack);
         d3.select(".linkColoursSourceTwo").style("background-color", d.cOutline);
         d3.select(".linkColoursSourceThree").style("background-color", d.cText);
@@ -624,8 +679,8 @@ d3.json("js/data.json", function(error, graph) {
         d3.selectAll(".sL").style("background-color", d.source.cBack);
         d3.selectAll(".sR").style("background-color", d.source.ocBack);
         
-        d3.select(".cLeft").style("width", ((d.source.wins / d.source.gamesPlayed) * 100*1.5) + "%");
-        d3.select(".cRight").style("width", ((d.target.wins / d.target.gamesPlayed) * 100*1.5) + "%");
+        // d3.select(".cLeft").style("width", ((d.source.wins / d.source.gamesPlayed) * 100*1.5) + "%");
+        // d3.select(".cRight").style("width", ((d.target.wins / d.target.gamesPlayed) * 100*1.5) + "%");
         d3.select(".linkColoursSourceOne").style("background-color", d.source.cBack);
         d3.select(".linkColoursSourceTwo").style("background-color", d.source.cOutline);
         d3.select(".linkColoursSourceThree").style("background-color", d.source.cText);
