@@ -80,6 +80,29 @@ a:hover {
 /*    transform: translate(-50%, -50%);*/
 /*}*/
 
+/*----Instructions----*/
+.instBox {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 5px;
+    height: 55px;
+    width: 157px;
+    background: url("../images/sRicons.svg");
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: 150px auto;
+    background-color: black;
+    padding-top: 35px;
+    opacity: .75;
+    
+    color: white;
+    font-family: "skolar-sans-latin", sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 10px;
+    text-align: center;
+}
 
 /*--HEADER--*/
 
@@ -391,6 +414,7 @@ a:hover {
     font-style: italic;
     font-family: "skolar-sans-latin", sans-serif;
     text-align: left;
+    cursor: pointer;
 }
 .leagueRow {
 
@@ -513,19 +537,19 @@ a:hover {
 .storySub p {
     margin-top: -10px;
 }
-#sfGiants-dodgers {
+#story-sfGiants-dodgers {
     color: #FF6633;
 }
-#leafs-canadiens {
+#story-leafs-canadiens {
     color: #FF9966;
 }
-#celtics-lakers {
+#story-celtics-lakers {
     color: #669933;
 }
-#blueBombers-roughriders {
+#story-blueBombers-roughriders {
     color: #61B8DA;
 }
-#bears-packers {
+#story-bears-packers {
     color: #333366;
 }
 

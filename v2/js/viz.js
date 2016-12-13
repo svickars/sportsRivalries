@@ -117,13 +117,13 @@ d3.select("#lMLBname").on("mouseover", function(d) {
                       .on("mouseout", function(d) {
                           leagueNameHoverExit();
                       });
-d3.select("#lMLSLname").on("mouseover", function(d) {
+d3.select("#lMLSname").on("mouseover", function(d) {
                         leagueNameHover(".mls");
                       })
                       .on("mouseout", function(d) {
                           leagueNameHoverExit();
                       });
-d3.select("#lNBALname").on("mouseover", function(d) {
+d3.select("#lNBAname").on("mouseover", function(d) {
                         leagueNameHover(".nba");
                       })
                       .on("mouseout", function(d) {
@@ -141,24 +141,93 @@ d3.select("#lNHLname").on("mouseover", function(d) {
                       .on("mouseout", function(d) {
                           leagueNameHoverExit();
                       });
+                      
+d3.select("#tTerr").on("mouseover", function(d) {
+                        typeHover(".territorial");
+                      })
+                      .on("mouseout", function(d) {
+                          typeHoverExit();
+                      });
+                      
+d3.select("#tGeo").on("mouseover", function(d) {
+                        typeHover(".territorial");
+                      })
+                      .on("mouseout", function(d) {
+                          typeHoverExit();
+                      });                  
+d3.select("#tOrig").on("mouseover", function(d) {
+                        typeHover(".originalSix");
+                      })
+                      .on("mouseout", function(d) {
+                          typeHoverExit();
+                      });                  
+d3.select("#tMan").on("mouseover", function(d) {
+                        typeHover(".manufactured");
+                      })
+                      .on("mouseout", function(d) {
+                          typeHoverExit();
+                      });                  
+d3.select("#tPlay").on("mouseover", function(d) {
+                        typeHover(".playoff");
+                      })
+                      .on("mouseout", function(d) {
+                          typeHoverExit();
+                      });                  
+d3.select("#tHis").on("mouseover", function(d) {
+                        typeHover(".historical");
+                      })
+                      .on("mouseout", function(d) {
+                          typeHoverExit();
+                      });                  
+d3.select("#tDiv").on("mouseover", function(d) {
+                        typeHover(".divisional");
+                      })
+                      .on("mouseout", function(d) {
+                          typeHoverExit();
+                      });   
 
+function typeHover(type) {
+    d3.selectAll(".territorial").style("opacity", "0.1");
+    d3.selectAll(".geographic").style("opacity", "0.1");
+    d3.selectAll(".divisional").style("opacity", "0.1");
+    d3.selectAll(".originalSix").style("opacity", "0.1");
+    d3.selectAll(".manufactured").style("opacity", "0.1");
+    d3.selectAll(".league").style("opacity", "0.1");
+    d3.selectAll(".expansion").style("opacity", "0.1");
+    d3.selectAll(".brady-manning").style("opacity", "0.1");
+    d3.selectAll(".superbowl").style("opacity", "0.1");
+    d3.selectAll(".historical").style("opacity", "0.1");
+    d3.selectAll(type).style("opacity", "1.0");
+}
+function typeHoverExit() {
+    d3.selectAll(".territorial").style("opacity", "1");
+    d3.selectAll(".geographic").style("opacity", "1");
+    d3.selectAll(".divisional").style("opacity", "1");
+    d3.selectAll(".originalSix").style("opacity", "1");
+    d3.selectAll(".manufactured").style("opacity", "1");
+    d3.selectAll(".league").style("opacity", "1");
+    d3.selectAll(".expansion").style("opacity", "1");
+    d3.selectAll(".brady-manning").style("opacity", "1");
+    d3.selectAll(".superbowl").style("opacity", "1");
+    d3.selectAll(".historical").style("opacity", "1");
+}
 
 function leagueNameHover(league) {
-    d3.selectAll(".cfl").transition().duration(100).style("opacity", "0.1");
-    d3.selectAll(".mlb").transition().duration(100).style("opacity", "0.1");
-    d3.selectAll(".mls").transition().duration(100).style("opacity", "0.1");
-    d3.selectAll(".nba").transition().duration(100).style("opacity", "0.1");
-    d3.selectAll(".nfl").transition().duration(100).style("opacity", "0.1");
-    d3.selectAll(".nhl").transition().duration(100).style("opacity", "0.1");
+    d3.selectAll(".cfl").style("opacity", "0.1");
+    d3.selectAll(".mlb").style("opacity", "0.1");
+    d3.selectAll(".mls").style("opacity", "0.1");
+    d3.selectAll(".nba").style("opacity", "0.1");
+    d3.selectAll(".nfl").style("opacity", "0.1");
+    d3.selectAll(".nhl").style("opacity", "0.1");
     d3.selectAll(league).style("opacity", "1.0");
 }
 function leagueNameHoverExit() {
-    d3.selectAll(".cfl").transition().duration(100).style("opacity", "1");
-    d3.selectAll(".mlb").transition().duration(100).style("opacity", "1");
-    d3.selectAll(".mls").transition().duration(100).style("opacity", "1");
-    d3.selectAll(".nba").transition().duration(100).style("opacity", "1");
-    d3.selectAll(".nfl").transition().duration(100).style("opacity", "1");
-    d3.selectAll(".nhl").transition().duration(100).style("opacity", "1");
+    d3.selectAll(".cfl").style("opacity", "1");
+    d3.selectAll(".mlb").style("opacity", "1");
+    d3.selectAll(".mls").style("opacity", "1");
+    d3.selectAll(".nba").style("opacity", "1");
+    d3.selectAll(".nfl").style("opacity", "1");
+    d3.selectAll(".nhl").style("opacity", "1");
 }
 // d3.select(".title").on("click", function(d) {
 //     if (introDown == false){
@@ -252,6 +321,27 @@ var popupLink = d3.select("#visualization").append("div").attr("class", "popupLi
 
 
 
+
+
+// ---------THE INFO BOX---------
+var instBox = d3.select("#visualization").append("div").attr("class", "instBox");
+instBox.html("Hover, click, pan, and zoom");
+instBox.style("top", (h - 150) + "px");
+instBox.transition().duration(1000).delay(3000).style("opacity", ".25");
+
+instBox.on("mouseover", function(d) {
+        instBox.transition().duration(500).style("opacity", ".75");
+    })
+    .on("mouseout", function(d) {
+        instBox.transition().duration(1000).style("opacity", ".25");
+    });
+
+
+
+
+
+
+
 // ---------THE VIZZY---------
 
 d3.json("js/data.json", function(error, graph) {
@@ -295,7 +385,7 @@ d3.json("js/data.json", function(error, graph) {
             return d.id;
         })
         .attr("class", function(d) {
-            return d.class;
+            return d.class + " " + d.source.rivalryType;
         })
         .style("stroke", function(d) {
             return d.colour;
@@ -309,7 +399,7 @@ d3.json("js/data.json", function(error, graph) {
             return d.bothTeams;
         })
         .attr("class", function(d) {
-            return 'node ' + d.class;
+            return 'node ' + d.class + ' ' + d.rivalryType;
         })
         .style("stroke", function(d) {
             return d.colour;
@@ -343,7 +433,7 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'edlabelBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+        .attr({'class':function(d){return 'edlabelBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower+' '+d.source.rivalryType},
                'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d){ 
                     var x1 = xPos(parseFloat(d.source.illX));
@@ -366,7 +456,7 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'edgelabelM edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+        .attr({'class':function(d){return 'edgelabelM edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower+' '+d.source.rivalryType},
                'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d){ 
                     var x1 = xPos(parseFloat(d.source.illX));
@@ -389,7 +479,7 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){ return 'edlabelWBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+        .attr({'class':function(d){ return 'edlabelWBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower+' '+d.source.rivalryType},
                'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d) {
                    return dxScale(d.source.wins);
@@ -408,7 +498,7 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){ return 'edlabelLBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+        .attr({'class':function(d){ return 'edlabelLBG edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower+' '+d.source.rivalryType},
                'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d) {
                    var x1 = xPos(parseFloat(d.source.illX));
@@ -432,7 +522,7 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'edlabelW edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+        .attr({'class':function(d){return 'edlabelW edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower+' '+d.source.rivalryType},
                'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d) {
                    return dxScale(d.source.wins);
@@ -450,7 +540,7 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'edlabelL edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower},
+        .attr({'class':function(d){return 'edlabelL edgelabel '+d.source.bothTeams+' '+d.target.bothTeams+' '+d.source.leagueLower+' '+d.source.rivalryType},
                'id':function(d,i){return 'edgelabel-'+d.id},
                'dx':function(d) {
                    var x1 = xPos(parseFloat(d.source.illX));
@@ -505,7 +595,7 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'nodeLabelsCBG nodeLabels ' + d.class},
+        .attr({'class':function(d){return 'nodeLabelsCBG nodeLabels ' + d.class+' '+d.rivalryType},
               'id':function(d){return 'nodeLabels-' + d.teamSmall},
               'x': function(d){return xPos(parseFloat(d.illX))},
               'y': function(d){return yPos(parseFloat(d.illY))},
@@ -521,7 +611,7 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'nodeLabelsNBG nodeLabels ' + d.class},
+        .attr({'class':function(d){return 'nodeLabelsNBG nodeLabels ' + d.class+' '+d.rivalryType},
               'id':function(d){return 'nodeLabels-' + d.teamSmall},
               'x': function(d){return xPos(parseFloat(d.illX))},
               'y': function(d){return yPos(parseFloat(d.illY))},
@@ -537,7 +627,7 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'nodeLabelsC nodeLabels ' + d.class},
+        .attr({'class':function(d){return 'nodeLabelsC nodeLabels ' + d.class+' '+d.rivalryType},
               'id':function(d){return 'nodeLabels-' + d.teamSmall},
               'x': function(d){return xPos(parseFloat(d.illX))},
               'y': function(d){return yPos(parseFloat(d.illY))},
@@ -552,7 +642,7 @@ d3.json("js/data.json", function(error, graph) {
         .enter()
         .append("text")
         .style("pointer-events", "none")
-        .attr({'class':function(d){return 'nodeLabelsN nodeLabels ' + d.class},
+        .attr({'class':function(d){return 'nodeLabelsN nodeLabels ' + d.class+' '+d.rivalryType},
               'id':function(d){return 'nodeLabels-' + d.teamSmall},
               'x': function(d){return xPos(parseFloat(d.illX))},
               'y': function(d){return yPos(parseFloat(d.illY))},
@@ -646,7 +736,7 @@ d3.json("js/data.json", function(error, graph) {
         d3.select(".linkColoursTargetThree").style("background-color", d.ocBack);
         
         function pOppOver(d) {
-            console.log(d);
+            // console.log(d);
         }
         
         d3.select(".pHeader").style("background-color", d.cBack);
@@ -727,7 +817,7 @@ d3.json("js/data.json", function(error, graph) {
         // d3.selectAll(".nodeLabels").style("opacity", "1.0");
     }
     function set_highlight(d) {
-        console.log(d);
+        
         svg.style("cursor", "pointer");
         circle.style("stroke", function(o) {return isConnected(d, o) ? d.colour : "rgba(0,0,0,0.05)";});
         link.style("stroke", function(o) {return o.source.index == d.index || o.target.index == d.index ? d.colour : "rgba(0,0,0,0.05)";});
