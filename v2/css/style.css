@@ -121,8 +121,37 @@ a:hover {
         right: 30px;
         
     }
+    .search-head {
+        position:absolute;
+        right: 375px;
+    }
+    .reset {
+        position: absolute;
+        right: 535px;
+    }
 }
 .filters {
+    height: 30px;
+    top: 10px;
+    text-align: center;
+    
+    background-image: url("../images/middle.png");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: auto 5px;
+}
+.search-head {
+    height: 30px;
+    top: 10px;
+    text-align: center;
+    
+    background-image: url("../images/middle.png");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: auto 5px;
+}
+
+.reset {
     height: 30px;
     top: 10px;
     text-align: center;
@@ -257,6 +286,16 @@ a:hover {
     display: none;
 }
 
+#resetButton {
+    color: #999999;
+    border-color: #727272;
+}
+
+#resetButton:hover {
+    color: white;
+    background-color: #727272;
+}
+
 /*INTRO*/
 #down {
     display: inline-block;
@@ -291,6 +330,7 @@ a:hover {
 }
 
 .introUpdate {
+    text-align: right;
     font-size: 8px;
     font-family: "skolar-sans-latin", sans-serif;
     font-weight: 300;
@@ -605,7 +645,16 @@ a:hover {
 
 /*-------------------*/
 /*-----THE POPUP-----*/
-
+.closeit {
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    cursor: pointer;
+    color: #727272;
+}
+.closeit:hover {
+    color: #999999;
+}
 .popup {
     display: none;
     position: absolute;
@@ -873,4 +922,58 @@ a:hover {
 /* Popover Arrow */
 .arrow {
     /*border-right-color: red !important;*/
+}
+
+/*-----THE SEARCH----*/
+
+#userinput {
+    padding: 0px 10px 2px 5px;
+    margin: 0 5px;
+    border: 1px solid #727272;
+    border-radius: 5px;
+    
+    font-family: "skolar-sans-latin", sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    color: #727272;
+    
+    background: url("../images/search.svg");
+    background-repeat: no-repeat;
+    background-position: 95% center;
+    background-size: 13px auto;
+}
+
+#userinput:focus {
+    background-color: white;
+    border-color: black;
+    outline: none;
+}
+
+#search {
+    /*padding-right: 3px;*/
+    /*padding-right: 4px \9;*/
+    /*padding-left: 3px;*/
+    /*padding-left: 4px \9;*/
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+    margin-bottom: 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#search button {
+    border: 0;
+    background: none;
+    /** belows styles are working good */
+    padding: 2px 5px;
+    margin-top: 2px;
+    position: relative;
+    left: -28px;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #D9230F;
 }

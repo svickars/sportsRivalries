@@ -3,81 +3,67 @@
 var cflButton = d3.select("#cflButton");
 var cflButton2 = d3.select("#cflButton2");
 cflButton.on("click", function() {
-    d3.select("#cflButton").style("display", "none");
-    d3.select("#cflButton2").style("display", "inline-block");
-    d3.selectAll(".cfl").style("visibility", "hidden");
+    buttonClickOff('#cflButton', '#cflButton2', '.cfl')
 });
 cflButton2.on("click", function() {
-    d3.select("#cflButton2").style("display", "none");
-    d3.select("#cflButton").style("display", "inline-block");
-    d3.selectAll(".cfl").style("visibility", "visible");
+    buttonClickOn('#cflButton', '#cflButton2', '.cfl')
 });
 // --MLB--
 var mlbButton = d3.select("#mlbButton");
 var mlbButton2 = d3.select("#mlbButton2");
-mlbButton.on("click", function() {
-    d3.select("#mlbButton").style("display", "none");
-    d3.select("#mlbButton2").style("display", "inline-block");
-    d3.selectAll(".mlb").style("visibility", "hidden");
+    mlbButton.on("click", function() {
+        buttonClickOff('#mlbButton', '#mlbButton2', '.mlb')
 });
 mlbButton2.on("click", function() {
-    d3.select("#mlbButton2").style("display", "none");
-    d3.select("#mlbButton").style("display", "inline-block");
-    d3.selectAll(".mlb").style("visibility", "visible");
+    buttonClickOn('#mlbButton', '#mlbButton2', '.mlb')
 });
 // --MLS--
 var mlsButton = d3.select("#mlsButton");
 var mlsButton2 = d3.select("#mlsButton2");
 mlsButton.on("click", function() {
-    d3.select("#mlsButton").style("display", "none");
-    d3.select("#mlsButton2").style("display", "inline-block");
-    d3.selectAll(".mls").style("visibility", "hidden");
+    buttonClickOff('#mlsButton', '#mlsButton2', '.mls')
 });
 mlsButton2.on("click", function() {
-    d3.select("#mlsButton2").style("display", "none");
-    d3.select("#mlsButton").style("display", "inline-block");
-    d3.selectAll(".mls").style("visibility", "visible");
+    buttonClickOn('#mlsButton', '#mlsButton2', '.mls')
 });
 // --NBA--
 var nbaButton = d3.select("#nbaButton");
 var nbaButton2 = d3.select("#nbaButton2");
 nbaButton.on("click", function() {
-    d3.select("#nbaButton").style("display", "none");
-    d3.select("#nbaButton2").style("display", "inline-block");
-    d3.selectAll(".nba").style("visibility", "hidden");
+    buttonClickOff('#nbaButton', '#nbaButton2', '.nba')
 });
 nbaButton2.on("click", function() {
-    d3.select("#nbaButton2").style("display", "none");
-    d3.select("#nbaButton").style("display", "inline-block");
-    d3.selectAll(".nba").style("visibility", "visible");
+    buttonClickOn('#nbaButton', '#nbaButton2', '.nba')
 });
 // --NFL--
 var nflButton = d3.select("#nflButton");
 var nflButton2 = d3.select("#nflButton2");
 nflButton.on("click", function() {
-    d3.select("#nflButton").style("display", "none");
-    d3.select("#nflButton2").style("display", "inline-block");
-    d3.selectAll(".nfl").style("visibility", "hidden");
+    buttonClickOff('#nflButton', '#nflButton2', '.nfl')
 });
 nflButton2.on("click", function() {
-    d3.select("#nflButton2").style("display", "none");
-    d3.select("#nflButton").style("display", "inline-block");
-    d3.selectAll(".nfl").style("visibility", "visible");
+    buttonClickOn('#nflButton', '#nflButton2', '.nfl')
 });
 // --NHL--
 var nhlButton = d3.select("#nhlButton");
 var nhlButton2 = d3.select("#nhlButton2");
 nhlButton.on("click", function() {
-    d3.select("#nhlButton").style("display", "none");
-    d3.select("#nhlButton2").style("display", "inline-block");
-    d3.selectAll(".nhl").style("visibility", "hidden");
+    buttonClickOff('#nhlButton', '#nhlButton2', '.nhl')
 });
 nhlButton2.on("click", function() {
-    d3.select("#nhlButton2").style("display", "none");
-    d3.select("#nhlButton").style("display", "inline-block");
-    d3.selectAll(".nhl").style("visibility", "visible");
+    buttonClickOn('#nhlButton', '#nhlButton2', '.nhl')
 });
 
+function buttonClickOff(b1, b2, league) {
+    d3.select(b1).style("display", "none");
+    d3.select(b2).style("display", "inline-block");
+    d3.selectAll(league).transition().style("visibility", "hidden");
+}
+function buttonClickOn(b1, b2, league) {
+    d3.select(b2).style("display", "none");
+    d3.select(b1).style("display", "inline-block");
+    d3.selectAll(league).transition().style("visibility", "visible");
+}
 
 
 
@@ -385,7 +371,7 @@ d3.json("js/data.json", function(error, graph) {
             return d.id;
         })
         .attr("class", function(d) {
-            return d.class + " " + d.source.rivalryType;
+            return d.class + " " + d.source.rivalryType + " " + d.source.class + " " + d.target.class;
         })
         .style("stroke", function(d) {
             return d.colour;
@@ -399,11 +385,12 @@ d3.json("js/data.json", function(error, graph) {
             return d.bothTeams;
         })
         .attr("class", function(d) {
-            return 'node ' + d.class + ' ' + d.rivalryType;
+            return 'node ' + d.class + ' ' + d.rivalryType + ' node-' + d.bothTeams;
         })
         .style("stroke", function(d) {
             return d.colour;
         })
+        // .style("display", "none")
         .call(force.drag);
 
     // what do to on double click - zoom it!
@@ -424,6 +411,9 @@ d3.json("js/data.json", function(error, graph) {
             .type(function(d) {
                 return d.type;
             }))
+        .attr("class", function(d) {
+            return 'node-' + d.bothTeams
+        })
         .attr("id", function(d) {
             return d.bothTeams
         });
@@ -643,6 +633,7 @@ d3.json("js/data.json", function(error, graph) {
         .append("text")
         .style("pointer-events", "none")
         .attr({'class':function(d){return 'nodeLabelsN nodeLabels ' + d.class+' '+d.rivalryType},
+              'name': "nodeLabels",
               'id':function(d){return 'nodeLabels-' + d.teamSmall},
               'x': function(d){return xPos(parseFloat(d.illX))},
               'y': function(d){return yPos(parseFloat(d.illY))},
@@ -650,7 +641,12 @@ d3.json("js/data.json", function(error, graph) {
               'text-anchor': 'middle',
               'stroke': 'none'
         })
-        .text(function(d) {return d.teamName});
+        .text(function(d) {return d.teamName})
+        .on("mouseover", function(d) {
+            console.log("hi");
+        });
+        
+        d3.selectAll("text[name='nodeLabels']").style("color", "red");
     
 
     // node interaction
@@ -690,12 +686,22 @@ d3.json("js/data.json", function(error, graph) {
                 exit_highlightLink(d);
             }
         });
-
+    
+    d3.select("#nodeLabels-sfGiants").on("click", function(d){
+       console.log("hi"); 
+    });
+    
     // ----THE POPUPS----
     function nodePop(d) {
         clicked = true;
         popupLink.style("display", "block")
             .html("<div class='popupLinkHeader'>    <div class='popupLinkHeaderInner'>"+d.team+" <span id='versus'>vs</span> "+d.opponentTeam+"</div></div><div class='popupLinkBottom'>    <div class='linkColours'>        <div class='coloursLeft'>            <div class='cLeft'>                <div class='linkColoursSourceOne'></div>                <div class='linkColoursSourceTwo'></div>                <div class='linkColoursSourceThree'></div>            </div>        </div>        <div class='coloursRight'>            <div class='cRight'>                <div class='linkColoursTargetOne'></div>                <div class='linkColoursTargetTwo'></div>                <div class='linkColoursTargetThree'></div>            </div>        </div>    </div>    <div class='popupLinkTitle'>"+d.rivalryType+" Rivalry<br>"+d.rivalryName+"</div>   <div class='popupLinkStats'><div class='statsLeft'>"+d.gamesPlayed+"<div class='sL' id='sGPL'></div></div>        <div class='statsCenter'>GP</div>        <div class='statsRight'><div class='sR' id='sGPR'></div>"+d.gamesPlayed+"</div><div class='statsLeft'>"+d.wins+"<div class='sL' id='sWL'></div></div>        <div class='statsCenter'>W</div>        <div class='statsRight'><div class='sR' id='sWR'></div>"+d.oWins+"</div><div class='statsLeft'>"+d.ties+"<div class='sL' id='sTL'></div></div>        <div class='statsCenter'>T</div>        <div class='statsRight'><div class='sR' id='sTR'></div>"+d.oTies+"</div><div class='statsLeft'>"+d.losses+"<div class='sL' id='sLL'></div></div>        <div class='statsCenter'>L</div>        <div class='statsRight'><div class='sR' id='sLR'></div>"+d.oLosses+"</div><div class='statsLeft'>"+d.otLosses+"<div class='sL' id='sOTLL'></div></div>        <div class='statsCenter'>OTL</div>        <div class='statsRight'><div class='sR' id='sOTLR'></div>"+d.oOtLosses+"</div><div class='statsLeft'>"+d.for+"<div class='sL' id='sFL'></div></div>        <div class='statsCenter'>+</div>        <div class='statsRight'><div class='sR' id='sFR'></div>"+d.oFor+"</div><div class='statsLeft'>"+d.against+"<div class='sL' id='sAL'></div></div>        <div class='statsCenter'>-</div>        <div class='statsRight'><div class='sR' id='sAR'></div>"+d.oAgainst+"</div>    </div>    <div class='popupLinkP'><p>"+d.rivalryNotes+"</p>    </div><div class='popupLinkFootnote'>Text automatically generated from Wikipedia. Problems? <a href='mailto:sam.vickars@gmail.com'>Let me know!</a></div></div>");
+        
+        var closeButton = d3.select(".popupLinkHeader").append("div").attr("class", "closeit");  
+        closeButton.html("<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>");
+        closeButton.on("click", function(d) {
+            popOut();
+        })   
             
         // for (var i=0; i<d.info.length; i++) {
         //     var pOppData = d.info;
@@ -749,7 +755,12 @@ d3.json("js/data.json", function(error, graph) {
         clicked = true;
         popupLink.style("display", "block")
             .html("<div class='popupLinkHeader'>    <div class='popupLinkHeaderInner'>"+d.source.team+" <span id='versus'>vs</span> "+d.source.opponentTeam+"</div></div><div class='popupLinkBottom'>    <div class='linkColours'>        <div class='coloursLeft'>            <div class='cLeft'>                <div class='linkColoursSourceOne'></div>                <div class='linkColoursSourceTwo'></div>                <div class='linkColoursSourceThree'></div>            </div>        </div>        <div class='coloursRight'>            <div class='cRight'>                <div class='linkColoursTargetOne'></div>                <div class='linkColoursTargetTwo'></div>                <div class='linkColoursTargetThree'></div>            </div>        </div>    </div>    <div class='popupLinkTitle'>"+d.source.rivalryType+" Rivalry<br>"+d.source.rivalryName+"</div>    <div class='popupLinkStats'>        <div class='statsLeft'>"+d.source.gamesPlayed+"            <div class='sL' id='sGPL'></div>        </div>        <div class='statsCenter'>GP</div>        <div class='statsRight'>            <div class='sR' id='sGPR'></div>"+d.source.gamesPlayed+"</div>        <div class='statsLeft'>"+d.source.wins+"            <div class='sL' id='sWL'></div>        </div>        <div class='statsCenter'>W</div>        <div class='statsRight'>            <div class='sR' id='sWR'></div>"+d.source.oWins+"</div>        <div class='statsLeft'>"+d.source.ties+"            <div class='sL' id='sTL'></div>        </div>        <div class='statsCenter'>T</div>        <div class='statsRight'>            <div class='sR' id='sTR'></div>"+d.source.oTies+"</div>        <div class='statsLeft'>"+d.source.losses+"            <div class='sL' id='sLL'></div>        </div>        <div class='statsCenter'>L</div>        <div class='statsRight'>            <div class='sR' id='sLR'></div>"+d.source.oLosses+"</div>        <div class='statsLeft'>"+d.source.otLosses+"            <div class='sL' id='sOTLL'></div>        </div>        <div class='statsCenter'>OTL</div>        <div class='statsRight'>            <div class='sR' id='sOTLR'></div>"+d.source.oOtLosses+"</div>        <div class='statsLeft'>"+d.source.for+"            <div class='sL' id='sFL'></div>        </div>        <div class='statsCenter'>+</div>        <div class='statsRight'>            <div class='sR' id='sFR'></div>"+d.source.oFor+"</div>        <div class='statsLeft'>"+d.source.against+"            <div class='sL' id='sAL'></div>        </div>        <div class='statsCenter'>-</div>        <div class='statsRight'>            <div class='sR' id='sAR'></div>"+d.source.oAgainst+"</div>    </div>    <div class='popupLinkP'>        <p>"+d.source.rivalryNotes+"</p>    </div>    <div class='popupLinkFootnote'>Text automatically generated from Wikipedia. Problems? <a href='mailto:sam.vickars@gmail.com'>Let me know!</a></div></div>");
-            
+        
+        var closeButton = d3.select(".popupLinkHeader").append("div").attr("class", "closeit");  
+        closeButton.html("<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>");
+        closeButton.on("click", function(d) {
+            linkPopOut();
+        })
         
         d3.select("#sGPL").style("width", ((100) * .5) +"%");
         d3.select("#sGPR").style("width", ((100) * .5) +"%");
@@ -789,45 +800,40 @@ d3.json("js/data.json", function(error, graph) {
         clicked = false;
         popupLink.style("display", "none");
     }
-
+    
     // ----THE MOUSE----
     // --mouseover--
     function label_highlight(d) {
         console.log("hi");
     }
+    
     function set_highlightLink(d) {
         svg.style("cursor", "pointer");
-        d3.selectAll(".node").transition().duration(300).style("opacity", 0.1);
-        d3.selectAll(".link").transition().duration(300).style("opacity", 0.1);
-        circle.transition().duration(300).style("opacity", 0.1);
+        circle.transition().duration(300).style("opacity", function(o) {return o.index == d.source.index || o.index == d.target.index ? 1.0 : 0.1;});
+        link.transition().duration(300).style("opacity", function(o) {return o.source.index == d.source.index || o.target.index == d.target.index ? 1.0 : 0.1;});
+        d3.selectAll(".nodeLabels").transition().style("opacity", function(e) {return (e.teamSmall === d.source.teamSmall) || (e.teamSmall === d.source.opponent) ? 1.0 : 0.1;});
+        
         d3.selectAll(".edgelabel").style("opacity", "0.1");
-        d3.selectAll(".nodeLabels").style("opacity", "0.1");
-        d3.selectAll("#" + d.source.bothTeams).style("opacity", 1.0);
-        d3.selectAll("#" + d.target.bothTeams).style("opacity", 1.0);
-        d3.selectAll("#edgelabel-" + d.id).style("opacity", "1.0");
-        d3.selectAll("#nodeLabels-" + d.source.teamSmall).style("opacity", "1.0");
-        d3.selectAll("#nodeLabels-" + d.target.teamSmall).style("opacity", "1.0");
+        d3.selectAll("#edgelabel-" + d.source.bothTeams).style("opacity", "1.0");
+        d3.selectAll("#edgelabel-" + d.source.bothTeamsBackwards).style("opacity", "1.0");
     }
+    
     function exit_highlightLink() {
         svg.style("cursor", "move");
         d3.selectAll(".edgelabel").style("opacity", "1.0");
         d3.selectAll(".nodeLabels").style("opacity", "1.0");
-        d3.selectAll(".node").transition().duration(300).style("opacity", 1.0);
-        d3.selectAll(".link").transition().duration(300).style("opacity", 1.0);
-        circle.transition().duration(300).style("opacity", 1.0);
-        link.transition().duration(300).style("opacity", 1.0);
+        circle.transition().style("opacity", 1.0);
+        link.transition().style("opacity", 1.0);
     }
+    
     function set_highlight(d) {
-        
         svg.style("cursor", "pointer");
-        circle.transition().duration(300).style("opacity", function(o) {return isConnected(d, o) ? 1.0 : 0.1 ;});
-        link.transition().duration(300).style("opacity", function(o) {return o.source.index == d.index || o.target.index == d.index ? 1.0 : 0.1;});
+        circle.transition().style("opacity", function(o) {return isConnected(d, o) ? 1.0 : 0.1 ;});
+        link.transition().style("opacity", function(o) {return o.source.index == d.index || o.target.index == d.index ? 1.0 : 0.1;});
+        d3.selectAll(".nodeLabels").transition().style("opacity", function(e) {return (e.teamSmall === d.teamSmall) || (e.teamSmall === d.opponent) ? 1.0 : 0.1;});
         d3.selectAll(".edgelabel").style("opacity", "0.1");
-        d3.selectAll(".nodeLabels").style("opacity", "0.1");
         d3.selectAll("#edgelabel-" + d.bothTeams).style("opacity", "1.0");
         d3.selectAll("#edgelabel-" + d.bothTeamsBackwards).style("opacity", "1.0");
-        d3.selectAll("#nodeLabels-" + d.teamSmall).style("opacity", "1.0");
-        d3.selectAll("#nodeLabels-" + d.opponent).style("opacity", "1.0");
     }
 
     // --mouseout--
@@ -835,8 +841,8 @@ d3.json("js/data.json", function(error, graph) {
         svg.style("cursor", "move");
         d3.selectAll(".edgelabel").style("opacity", "1.0");
         d3.selectAll(".nodeLabels").style("opacity", "1.0");
-        circle.transition().duration(300).style("opacity", 1.0);
-        link.transition().duration(300).style("opacity", 1.0);
+        circle.transition().style("opacity", 1.0);
+        link.transition().style("opacity", 1.0);
     }
 
     // --zoomskies--
@@ -895,6 +901,28 @@ d3.json("js/data.json", function(error, graph) {
     }
 
 });
+
+var reset = d3.select("#resetButton").on("click", function(d){
+    location.reload();
+})
+
+function findNode(search){
+        clicked = true;
+        search = search.replace(/\s/g, "-");
+        search = search.toLowerCase(search);
+        // var search = document.getElementById("targetNode").value;
+        console.log(search);
+        d3.selectAll(".node").transition().style("opacity", "0.1");
+        d3.selectAll(".link").transition().style("opacity", "0.1");
+        d3.selectAll(".nodeLabels").transition().style("opacity", "0.1");
+        d3.selectAll(".edgelabel").transition().style("opacity", "0.1");
+        d3.selectAll("." + search).transition().delay(1).style("opacity", "1.0");
+        // var theNode = d3.selectAll("." + search)
+        //                 .filter(function(d) { return d.class == search });
+        // d3.selectAll(".node").style("opacity","0");
+        // theNode.style("opacity","1");
+}
+
 
 // ---------UTILITIES---------
 

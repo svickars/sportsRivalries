@@ -31,12 +31,30 @@
         </div>
         <div class="row">
             <div class="headly">
-                <div class="col-sm-7 hidden-xs top">
+                <div class="col-sm-5 hidden-xs top">
                     <div class="title">
                         <h1>The Biggest Rivalries in Sports</h1>
                     </div>
                 </div>
-                <div class="col-sm-5 col-xs-12 top">
+                <div class="col-sm-7 col-xs-12 top">
+                    <div class="reset" id="reset">
+                        <div class="fLeft"></div>
+                        <span class="meghan" id="resetButton">Start Over</span>
+                        <div class="fRight"></div>
+                        <div class="fLabels" id="fLeagues">Reset</div>
+                    </div>
+                    <div class="search-head" id="search">
+                        <div class="fLeft"></div>
+                        <form id="search">
+                            <form action=".">
+                                <input type="text" onkeypress="if (event.keyCode==13){ findNode(this.value);return false;}" id="userinput" placeholder="Type and Hit Enter"/>
+                            </form>
+                        </form>
+                        <!--<input id="targetNode" name="targetNode" type="submit" />-->
+                        <!--<button onclick="findNode()">grow node</button>-->
+                        <div class="fRight"></div>
+                        <div class="fLabels" id="fLeagues">Search</div>
+                    </div>
                     <div class="filters" id="filters">
                         <div class="fLeft"></div>
                         <span class="meghan" id="cflButton">CFL</span><span class="meghan" id="cflButton2">CFL</span><span class="meghan" id="mlbButton">MLB</span><span class="meghan" id="mlbButton2">MLB</span><span class="meghan" id="mlsButton">MLS</span>
@@ -54,14 +72,14 @@
                 <div class="col-sm-7 introDesc">
                     Intense rivalries have played an integral role in professional sports since professional sports began. While the competitive pressure affects players, coaches, and managers, it is perhaps felt most by the fans. Although often manifested in friendly competition, matchups occasionally lead to serious violence in the game and also in the stands. Shown here are 127 rivalries (shown as thin lines) between 121 teams (shown as circles placed <em>almost</em> geographicly) in six major North American professional sports leagues.
                 </div>
-                <div class="col-sm-2 hidden-xs introUpdate">
+                <div class="col-sm-5 hidden-xs introUpdate">
                     Last updated <strong>8 Dec 2016</strong><br>
-                    <span>Automatically Updated Every Thursday</span>
+                    <span>Automatically Updated Every Thursday</span><br>
+                     Made with <font color="red">&hearts;</font> by <a href="http://samvickars.is">Sam Vickars</a>. <a href="https://github.com/svickars/sportsRivalries">Full notes and sources.</a>
                 </div>
-                <div class="col-sm-2 hidden-xs introUpdate">
-                    See the live data source here: <strong>[link]</strong><br>
-                    See it as a Google Sheet here: <strong>[link]</strong>
-                </div>
+                <!--<div class="col-sm-2 hidden-xs introUpdate">-->
+                <!--    Made with <font color="red">&hearts;</font> by <a href="http://samvickars.is">Sam Vickars</a><a href="https://github.com/svickars/sportsRivalries">Full notes and sources.</a>-->
+                <!--</div>-->
             </div>
             <div class="row introLegend">
                 <div class="col-sm-2 vcenter">
