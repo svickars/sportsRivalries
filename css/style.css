@@ -1,0 +1,979 @@
+/*--------------------*/
+/*-----THE BASICS-----*/
+
+body {
+    overflow: hidden;
+    margin: 0;
+}
+
+h1 {
+    font-family: "skolar-sans-latin",sans-serif !important;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 600;
+    color: black;
+}
+h5 {
+    font-family: "skolar-sans-latin",sans-serif !important;
+    font-size: 10px;
+    font-style: italic;
+    font-weight: 400;
+    color: black;
+}
+
+text {
+    font-family: "skolar-sans-latin",sans-serif !important;
+    pointer-events: none;
+}
+
+svg {
+    min-width: 1000px;
+}
+
+a {
+    color: red;
+}
+
+a:hover {
+    color: DarkSlateGrey ;
+}
+
+/*Turn off scrollbar*/
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/*--------------------*/
+/*-----THE LAYOUT-----*/
+
+.container-fluid {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+.top {
+    z-index: 999;
+}
+
+.headly {
+    margin: 0;
+    padding: 5px;
+    height: 75px;
+    background-color: #efefef;
+    z-index: 999;
+}
+
+.jayZ {
+    height: 100%;
+}
+
+.svg {
+    /*display: none;*/
+    /*transform: translate(-25%,-25%);*/
+    /*width: 200%;*/
+    /*height: 200%;*/
+}
+
+/*.svg {*/
+/*    transform: translate(-50%, -50%);*/
+/*}*/
+
+/*----Instructions----*/
+.instBox {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 5px;
+    height: 55px;
+    width: 157px;
+    background: url("../images/sRicons.svg");
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: 150px auto;
+    background-color: black;
+    padding-top: 35px;
+    opacity: .75;
+    
+    color: white;
+    font-family: "skolar-sans-latin", sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 10px;
+    text-align: center;
+}
+
+/*--HEADER--*/
+
+.title {
+    position: absolute;
+    left: 25px;
+    top: -8px;
+    height: auto;
+    cursor: pointer;
+    /*left: 0;*/
+}
+
+@media (min-width: 768px) {
+    .filters {
+        position: absolute;
+        right: 30px;
+        
+    }
+    .search-head {
+        position:absolute;
+        right: 375px;
+    }
+    .reset {
+        position: absolute;
+        right: 535px;
+    }
+}
+.filters {
+    height: 30px;
+    top: 10px;
+    text-align: center;
+    
+    background-image: url("../images/middle.png");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: auto 5px;
+}
+.search-head {
+    height: 30px;
+    top: 10px;
+    text-align: center;
+    
+    background-image: url("../images/middle.png");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: auto 5px;
+}
+
+.reset {
+    height: 30px;
+    top: 10px;
+    text-align: center;
+    
+    background-image: url("../images/middle.png");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: auto 5px;
+}
+
+.fLeft, .fRight {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background-repeat: no-repeat;
+    background-size: auto 5px;
+    background-color: #efefef;
+}
+
+.fLeft {
+    left: 0;
+    background-image: url("../images/left.png");
+    background-position: left bottom;
+}
+
+.fRight {
+    right: 0;
+    background-image: url("../images/right.png");
+    background-position: right bottom;
+}
+
+.fLabels {
+    font-family: "skolar-sans-latin", sans-serif;
+    font-size: 8px;
+    font-weight: 300;
+    opacity: .65;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#fLeagues {
+    margin-top: 10px;
+}
+#introLabels {
+    /*position: absolute;*/
+    display: block;
+    margin-left: 50%;
+    transform: translate(-50%, 23px);
+    margin-top: 5px;
+}
+
+
+/*buttons*/
+.meghan {
+    padding: 0px 10px 2px 10px;
+    margin: 0 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    
+    font-family: "skolar-sans-latin", sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    color: white;
+}
+
+#cflButton {
+    background-color: #3dbff2;
+    border-color: #3dbff2;
+}
+
+#mlbButton {
+    background-color: #f2671f;
+    border-color: #f2671f;
+}
+
+#mlsButton {
+    background-color: #c2495d;
+    border-color: #c2495d;
+}
+
+#nbaButton {
+    background-color: #60742f;
+    border-color: #60742f;
+}
+
+#nflButton {
+    background-color: #275174;
+    border-color: #275174;
+}
+
+#nhlButton {
+    background-color: #f0cb69;
+    border-color: #f0cb69;
+}
+
+#cflButton2 {
+    color: #3dbff2;
+    border-color: #3dbff2;
+    display: none;
+}
+
+#mlbButton2 {
+    color: #f2671f;
+    border-color: #f2671f;
+    display: none;
+}
+
+#mlsButton2 {
+    color: #c2495d;
+    border-color: #c2495d;
+    display: none;
+}
+
+#nbaButton2 {
+    color: #60742f;
+    border-color: #60742f;
+    display: none;
+}
+
+#nflButton2 {
+    color: #275174;
+    border-color: #275174;
+    display: none;
+}
+
+#nhlButton2 {
+    color: #f0cb69;
+    border-color: #f0cb69;
+    display: none;
+}
+
+#resetButton {
+    color: #999999;
+    border-color: #727272;
+}
+
+#resetButton:hover {
+    color: white;
+    background-color: #727272;
+}
+
+/*INTRO*/
+#down {
+    display: inline-block;
+    padding-top: 10px;
+    font-size: 18px;
+    position: absolute;
+    top: 18px;
+    left: 295px;
+    display: inline-block;
+}
+
+#down:hover {
+    color: gray;
+}
+
+.intro {
+    position: absolute;
+    width: 100%;
+    background-color: #efefef;
+    z-index: 998;
+    height: auto;
+    min-height: 200px;
+}
+
+.introDesc {
+    padding-left: 25px;
+    padding-right: 25px;
+    font-family: "skolar-sans-latin",sans-serif;
+    font-size: 10px;
+    text-align: justify;
+    color: #727272;
+}
+
+.introUpdate {
+    text-align: right;
+    font-size: 8px;
+    font-family: "skolar-sans-latin", sans-serif;
+    font-weight: 300;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    padding-right: 25px;
+    color: #727272;
+}
+
+.introUpdate span {
+    font-size: 6px;
+}
+
+.introLegend {
+    /*height: 500px;*/
+    background-color: #ededed;
+    text-align: center;
+    font-family: "skolar-sans-latin",sans-serif;
+}
+
+.introSection {
+    height: 100%;
+    /*margin-top: 50%;*/
+    
+    top: 5px;
+    text-align: center;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    
+    background-image: url("../images/middle.png");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: auto 5px;
+}
+@media (min-width: 768px) {
+    .introSection{
+        transform: translate(0, 0);
+    }
+}
+
+.introBottom {
+    background-color: #ededed;
+    height: 20px;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.introSectionSizes {
+    left: 10px;
+}
+
+.iLeagues {
+    /*border: 1px solid black;*/
+}
+.iSizes {
+    /*border: 1px solid red;*/
+}
+.iTypes {
+    /*border: 1px solid blue;*/
+}
+.iStories {
+    /*border: 1px solid orange;*/
+}
+.iBlank {
+    /*border: 1px solid black;*/
+}
+
+#introStories {
+    transform: translate(0, -50%)
+}
+
+.sLeft, .sRight {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 5px;
+    background-repeat: no-repeat;
+    background-size: auto 5px;
+    /*background-color: #efefef;*/
+}
+
+.sLeft {
+    left: 0px;
+    background-image: url("../images/left.png");
+    background-position: left bottom;
+}
+
+.sRight {
+    right: 0px;
+    background-image: url("../images/right.png");
+    background-position: right bottom;
+}
+
+
+@media (max-size: 767px) {
+    .introUpdate {
+        padding-left: 25px;
+    }
+}
+
+/*---LEAGUE---*/
+.leagueColours {
+    text-align: right;
+    padding-right: 0px;
+}
+.leagueC {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+    
+}
+.leagueNames {
+    font-size: 10px;
+    /*line-height: 10px;*/
+    font-style: italic;
+    font-family: "skolar-sans-latin", sans-serif;
+    text-align: left;
+    cursor: pointer;
+}
+.leagueRow {
+
+}
+#lCFL {
+    background-color: #61B8DA;
+}
+#lCFLname {
+    color: #61B8DA;
+    height: 20px;
+}
+#lMLB {
+    background-color: #FF6633;
+}
+#lMLBname {
+    color: #FF6633;
+    height: 20px;
+}
+#lMLS {
+    background-color: #993366;
+}
+#lMLSname {
+    color: #993366;
+    height: 20px;
+}
+#lNBA {
+    background-color: #669933;
+}
+#lNBAname {
+    color: #669933;
+    height: 20px;
+}
+#lNFL {
+    background-color: #333366;
+}
+#lNFLname {
+    color: #333366;
+    height: 20px;
+}
+#lNHL {
+    background-color: #FF6633;
+}
+#lNHLname {
+    color: #FF9966;
+    height: 20px;
+}
+
+/*---SIZES---*/
+.sizes {
+    height: 50px;
+}
+.sizeLarge {
+
+}
+.sizeMed {
+    padding-top: 7.5px;
+}
+.sizeSmall{
+    padding-top: 15px;
+}
+#sizeLarge {
+    height: 50px;
+    width: 50px;
+    margin-left: 50%;
+    transform: translate(-35%);
+    border: 2px solid black;
+    border-radius: 25px;
+}
+#sizeMed {
+    height: 35px;
+    width: 35px;
+    /*transform: translate(-%);*/
+    border: 2px solid black;
+    border-radius: 18px;
+}
+#sizeSmall {
+    height: 20px;
+    width: 20px;
+    transform: translate(-30%);
+    border: 2px solid black;
+    border-radius: 30px;
+}
+
+.arrowLine {
+    height: 8px;
+    width: 138px;
+    margin: auto;
+    font-size: 8px;
+    font-style: italic;
+    color: #727272;
+    background-image: url("../images/arrowLine.png");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: auto 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+#spacer {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.sizesSub {
+    width: 90%;
+    margin: auto;
+}
+
+/*----STORIES----*/
+.storyTitle {
+    
+}
+.storySub {
+    padding-top: 0px;
+    margin-top: 0px;
+    font-size: 8px;
+    font-family: "skolar-sans-latin", sans-serif;
+    text-align: center;
+    color: #727272;
+}
+.storySub p {
+    margin-top: -10px;
+}
+#story-sfGiants-dodgers {
+    color: #FF6633;
+}
+#story-leafs-canadiens {
+    color: #FF9966;
+}
+#story-celtics-lakers {
+    color: #669933;
+}
+#story-blueBombers-roughriders {
+    color: #61B8DA;
+}
+#story-bears-packers {
+    color: #333366;
+}
+
+/*-------------------*/
+/*-----THE VIZZY-----*/
+
+/*nodes and links*/
+.link {
+}
+
+.node {
+    fill: rgba(255,255,255,.5);
+    stroke-width: 1.5px;
+}
+
+.nhl {
+    stroke-width: 1.5px;
+}
+
+.nfl {
+    stroke-width: 1.5px;
+}
+
+.cfl {
+    stroke-width: 1.5px;
+}
+
+.nba {
+    stroke-width: 1.5px;
+}
+
+.mlb {
+    stroke-width: 1.5px;
+}
+
+.mls {
+    stroke-width: 1.5px;
+}
+
+/*labels*/
+.nodeLabels {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: black;
+}
+.nodeLabelsN, .nodeLabelsNBG {
+    font-style: italic;
+}
+.edgelabel {
+    
+}
+
+/*-------------------*/
+/*-----THE POPUP-----*/
+.closeit {
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    cursor: pointer;
+    color: #727272;
+}
+.closeit:hover {
+    color: #999999;
+}
+.popup {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    height: auto;
+    width: 300px;
+    
+    font-family: "skolar-sans-latin",sans-serif;
+}
+
+.pHeader {
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    
+    height: 100px;
+    padding-top: 10px;
+}
+
+.pOut {
+    height: 80px;
+    padding-top: 20px;
+    /*margin-top: 10px;*/
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
+.pInfo {
+    height: auto;
+    background-color: white;
+    padding: 5px;
+    
+    font-weight: 300;
+    font-size: 12px;
+}
+
+.pHeadline {
+    font-weight: 500;
+}
+
+.pOppOpp {
+    cursor: pointer;
+}
+
+.popupLink {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    height: auto;
+    width: 300px;
+    background-color: #efefef;
+    border: 1px solid #727272;
+    
+    font-family: "skolar-sans-latin",sans-serif;
+}
+
+.popupLinkHeader {
+    text-align: center;
+    height: 100px;
+    padding: 10px;
+    
+    font-style: italic;
+    font-weight: 600;
+    font-size: 14px
+}
+
+#versus {
+    font-style: normal;
+    color: #727272;
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.popupLinkHeaderInner {
+    padding-top: 25px;
+    height: 100%;
+    border-bottom: 1px solid #727272;
+}
+
+.popupLinkBottom {
+    /*height: auto;*/
+    padding: 0 10px 10px 10px;
+}
+
+.linkColours {
+    margin-top: 0px;
+    width: 100%;
+    height: 10px;
+}
+
+.coloursLeft {
+    height: 5px;
+    padding: 0px 0;
+    float: left;
+    width: 47%;
+    /*border-right: .5px solid black;*/
+}
+
+.coloursRight {
+    height: 5px;
+    padding: 0 0;
+    float: right;
+    width: 47%;
+    /*border-left: .5px solid black;*/
+}
+
+.cRight {
+    width: 100%;
+    /*margin-left: 50%;*/
+    /*transform: translate(-50%);*/
+    /*float: left;*/
+}
+.cLeft {
+    width: 100%;
+    /*margin-left: 50%;*/
+    /*transform: translate(-50%);*/
+    /*float: right;*/
+    /*text-align: right;*/
+}
+
+.linkColoursSourceOne {
+    float: left;
+    height: 5px;
+    width: 25%;
+}
+.linkColoursSourceTwo {
+    float: left;
+    height: 5px;
+    width:25%;
+}
+.linkColoursSourceThree {
+    float: right;
+    height: 5px;
+    width: 50%;
+}
+
+.linkColoursTargetOne {
+    float: left;
+    height: 5px;
+    width: 50%;
+}
+.linkColoursTargetTwo {
+    float: right;
+    height: 5px;
+    width:25%;
+}
+.linkColoursTargetThree {
+    float: right;
+    height: 5px;
+    width: 25%;
+}
+
+.popupLinkTitle {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 10px;
+    text-transform: capitalize;
+}
+
+.popupLinkStats {
+    margin-top: 5px;
+    text-align: center;
+    width: 100%;
+    font-size: 10px;
+
+}
+.statsLeft{
+    float: left;
+    width: 47%;
+    text-align: right;
+    height: 10px;
+    margin-bottom: 5px;
+    font-size: 7px;
+}
+.sL{
+    margin-top: 2.5px;
+    margin-left: 3px;
+    float: right;
+    height: 5px;
+}
+.statsCenter {
+    float: left;
+    width: 6%;
+    text-align: center;
+    font-size: 7px;
+    color: #727272;
+    height: 10px;
+    margin-bottom: 5px;
+}
+.statsRight {
+    text-align: left;
+    font-size: 7px;
+    float: right;
+    width: 47%;
+    margin-bottom: 5px;
+    height: 10px;
+}
+.sR {
+    margin-top: 2.5px;
+    margin-right: 3px;
+    float: left;
+    height: 5px;
+}
+
+
+.popupLinkP {
+    width: 100%;
+    border-top: 1px solid #727272;
+    padding-top: 10px;
+    font-size: 10px;
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.popupLinkFootnote {
+    font-size: 8px;
+    font-weight: 300;
+    text-transform: uppercase;
+    opacity: .4;
+    letter-spacing: 1px;
+}
+
+
+
+/*-----THE POPOVER-----*/
+#iIcon a {
+    color: DarkSlateGrey;
+    font-size: 8px;
+}
+
+#iIcon a:hover {
+    color: red;
+}
+ 
+ /* Popover */
+.popover {
+    width: 200px;
+    z-index: 999;
+}
+
+/* Popover Header */
+.popover-title {
+    background-color: #ffffff; 
+    color: #000000; 
+    font-family: "skolar-sans-latin", sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    text-align:center;
+    z-index: 999;
+}
+
+/* Popover Body */
+.popover-content {
+    color: #727272;
+    font-family: "skolar-sans-latin", sans-serif;
+    font-size: 10px;
+    /*padding: 25px;*/
+    z-index: 999;
+}
+
+/* Popover Arrow */
+.arrow {
+    /*border-right-color: red !important;*/
+}
+
+/*-----THE SEARCH----*/
+
+#userinput {
+    padding: 0px 10px 2px 5px;
+    margin: 0 5px;
+    border: 1px solid #727272;
+    border-radius: 5px;
+    
+    font-family: "skolar-sans-latin", sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    color: #727272;
+    
+    background: url("../images/search.svg");
+    background-repeat: no-repeat;
+    background-position: 95% center;
+    background-size: 13px auto;
+}
+
+#userinput:focus {
+    background-color: white;
+    border-color: black;
+    outline: none;
+}
+
+#search {
+    /*padding-right: 3px;*/
+    /*padding-right: 4px \9;*/
+    /*padding-left: 3px;*/
+    /*padding-left: 4px \9;*/
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+    margin-bottom: 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#search button {
+    border: 0;
+    background: none;
+    /** belows styles are working good */
+    padding: 2px 5px;
+    margin-top: 2px;
+    position: relative;
+    left: -28px;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #D9230F;
+}
