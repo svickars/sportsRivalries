@@ -907,7 +907,7 @@ var reset = d3.select("#resetButton").on("click", function(d){
 })
 
 function findNode(search){
-        clicked = true;
+        // clicked = true;
         search = search.replace(/\s/g, "-");
         search = search.toLowerCase(search);
         // var search = document.getElementById("targetNode").value;
