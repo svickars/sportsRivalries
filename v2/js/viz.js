@@ -797,30 +797,31 @@ d3.json("js/data.json", function(error, graph) {
     }
     function set_highlightLink(d) {
         svg.style("cursor", "pointer");
-        d3.selectAll(".node").style("stroke", "rgba(0,0,0,0.05)");
-        d3.selectAll(".link").style("stroke", "rgba(0,0,0,0.05)");
-        circle.style("stroke", "rgba(0,0,0,0.05");
+        d3.selectAll(".node").transition().duration(300).style("opacity", 0.1);
+        d3.selectAll(".link").transition().duration(300).style("opacity", 0.1);
+        circle.transition().duration(300).style("opacity", 0.1);
         d3.selectAll(".edgelabel").style("opacity", "0.1");
         d3.selectAll(".nodeLabels").style("opacity", "0.1");
-        d3.selectAll("#" + d.source.bothTeams).style("stroke", d.colour);
-        d3.selectAll("#" + d.target.bothTeams).style("stroke", d.colour);
+        d3.selectAll("#" + d.source.bothTeams).style("opacity", 1.0);
+        d3.selectAll("#" + d.target.bothTeams).style("opacity", 1.0);
         d3.selectAll("#edgelabel-" + d.id).style("opacity", "1.0");
         d3.selectAll("#nodeLabels-" + d.source.teamSmall).style("opacity", "1.0");
         d3.selectAll("#nodeLabels-" + d.target.teamSmall).style("opacity", "1.0");
     }
-    function exit_highlightLink(d) {
+    function exit_highlightLink() {
         svg.style("cursor", "move");
         d3.selectAll(".edgelabel").style("opacity", "1.0");
         d3.selectAll(".nodeLabels").style("opacity", "1.0");
-        circle.style("stroke", function(d) {return d.colour;});
-        link.style("stroke", function(d) {return d.colour;});
-        // d3.selectAll(".nodeLabels").style("opacity", "1.0");
+        d3.selectAll(".node").transition().duration(300).style("opacity", 1.0);
+        d3.selectAll(".link").transition().duration(300).style("opacity", 1.0);
+        circle.transition().duration(300).style("opacity", 1.0);
+        link.transition().duration(300).style("opacity", 1.0);
     }
     function set_highlight(d) {
         
         svg.style("cursor", "pointer");
-        circle.style("stroke", function(o) {return isConnected(d, o) ? d.colour : "rgba(0,0,0,0.05)";});
-        link.style("stroke", function(o) {return o.source.index == d.index || o.target.index == d.index ? d.colour : "rgba(0,0,0,0.05)";});
+        circle.transition().duration(300).style("opacity", function(o) {return isConnected(d, o) ? 1.0 : 0.1 ;});
+        link.transition().duration(300).style("opacity", function(o) {return o.source.index == d.index || o.target.index == d.index ? 1.0 : 0.1;});
         d3.selectAll(".edgelabel").style("opacity", "0.1");
         d3.selectAll(".nodeLabels").style("opacity", "0.1");
         d3.selectAll("#edgelabel-" + d.bothTeams).style("opacity", "1.0");
@@ -834,8 +835,8 @@ d3.json("js/data.json", function(error, graph) {
         svg.style("cursor", "move");
         d3.selectAll(".edgelabel").style("opacity", "1.0");
         d3.selectAll(".nodeLabels").style("opacity", "1.0");
-        circle.style("stroke", function(d) {return d.colour;});
-        link.style("stroke", function(d) {return d.colour;});
+        circle.transition().duration(300).style("opacity", 1.0);
+        link.transition().duration(300).style("opacity", 1.0);
     }
 
     // --zoomskies--
